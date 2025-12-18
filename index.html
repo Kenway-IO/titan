@@ -22,6 +22,20 @@
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.3s ease-out',
+                        'slide-up': 'slideUp 0.4s ease-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        }
                     }
                 }
             }
@@ -83,8 +97,8 @@
         }
 
         .card-hover:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
 
         /* Flow Chart Styles */
@@ -99,6 +113,21 @@
         .flow-node:hover {
             transform: scale(1.05);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Modal Scrollbar */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
         }
     </style>
 </head>
@@ -128,6 +157,8 @@
         const Server = (props) => <Icon {...props}><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></Icon>;
         const ChevronUp = (props) => <Icon {...props}><polyline points="18 15 12 9 6 15"></polyline></Icon>;
         const ChevronDown = (props) => <Icon {...props}><polyline points="6 9 12 15 18 9"></polyline></Icon>;
+        const Lightbulb = (props) => <Icon {...props}><line x1="9" y1="18" x2="15" y2="18"></line><line x1="10" y1="22" x2="14" y2="22"></line><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 12 3 4.65 4.65 0 0 0 7.5 7.5c0 2.11 1.32 4.3 4 5.18V14a2 2 0 0 0 2 2Z"></path></Icon>;
+        const ShieldCheck = (props) => <Icon {...props}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></Icon>;
 
         // Icon mapping helper since we are loading data from JSON strings
         const IconMap = {
@@ -137,6 +168,125 @@
             Activity: Activity,
             CheckCircle: CheckCircle
         };
+
+        // --- METHODOLOGY DETAIL DATA ---
+        const METHODOLOGY_DETAILS = {
+            'T1': {
+                letter: 'T',
+                title: 'Trigger',
+                subtitle: 'The Pulse of the Enterprise',
+                color: 'text-kenway-navy',
+                bgColor: 'bg-kenway-navy',
+                bgLight: 'bg-blue-50',
+                border: 'border-kenway-navy',
+                icon: Zap,
+                animation: 'animate-pulse',
+                description: "Integration shouldn't be a scheduled batch job. It should be a nervous system reaction. A Trigger is the precise moment a business event occurs—an order placed, a sensor threshold breached, or a status changed.",
+                valueProp: "Stop polling. Start reacting.",
+                examples: [
+                    { title: "Business Events", desc: "Salesforce Opportunity Closed-Won" },
+                    { title: "IoT Signals", desc: "Freezer Truck Temp > 0°C" },
+                    { title: "System States", desc: "Inventory Level < Safety Stock" }
+                ],
+                kenwayEdge: "We implement Event-Driven Architectures (EDA) using Azure Event Grid and Kafka to eliminate the latency of legacy polling systems. If your data is 24 hours old, it's already a liability."
+            },
+            'I': {
+                letter: 'I',
+                title: 'Ingest',
+                subtitle: 'The Context Engine',
+                color: 'text-kenway-blue',
+                bgColor: 'bg-kenway-blue',
+                bgLight: 'bg-cyan-50',
+                border: 'border-kenway-blue',
+                icon: Database,
+                animation: 'animate-bounce',
+                description: "Raw triggers are rarely enough. 'Order 123 Created' tells you nothing about VIP status or fraud risk. The Ingest stage instantly hydrates the event with historical data, master data, and cross-reference IDs.",
+                valueProp: "Data without context is just noise.",
+                examples: [
+                    { title: "Hydration", desc: "Fetch Customer Lifetime Value (LTV)" },
+                    { title: "Normalization", desc: "Map SAP Material ID to Salesforce Product Code" },
+                    { title: "Security", desc: "Validate API Keys & Claims" }
+                ],
+                kenwayEdge: "We use the 'Claim Check' pattern to keep your message bus fast. Heavy payloads stay in storage; only the context moves. This ensures we can scale to millions of events without clogging the pipes."
+            },
+            'T2': {
+                letter: 'T',
+                title: 'Think',
+                subtitle: 'The Intelligence Layer',
+                color: 'text-purple-600',
+                bgColor: 'bg-purple-600',
+                bgLight: 'bg-purple-50',
+                border: 'border-purple-600',
+                icon: BrainCircuit,
+                animation: 'animate-pulse',
+                description: "This is where 'Pipe Builders' fail and 'TITAN Architects' succeed. We don't just move data; we inspect it. This layer applies business logic, policy rules, or Agentic AI to decide *what* to do next.",
+                valueProp: "Move from automation to autonomy.",
+                examples: [
+                    { title: "Boolean Rules", desc: "IF Order > $10k THEN Route to Concierge" },
+                    { title: "Agentic AI", desc: "Use LLM to summarize support ticket sentiment" },
+                    { title: "Anomaly Detect", desc: "Flag invoice if 30% higher than average" }
+                ],
+                kenwayEdge: "We embed decisioning *inside* the integration stream. By decoupling the logic from the destination system, we prevent your ERP from becoming a spaghetti-code mess of custom rules."
+            },
+            'A': {
+                letter: 'A',
+                title: 'Act',
+                subtitle: 'The Muscle',
+                color: 'text-orange-500',
+                bgColor: 'bg-orange-500',
+                bgLight: 'bg-orange-50',
+                border: 'border-orange-500',
+                icon: Activity,
+                animation: 'animate-spin-slow', 
+                description: "The deterministic state change. This is the API call, the database write, or the provisioning command. It must be rugged, reliable, and capable of handling partial failures without corrupting data.",
+                valueProp: "Execute with precision.",
+                examples: [
+                    { title: "CRUD", desc: "Create Customer Record in SAP" },
+                    { title: "Provisioning", desc: "Create Active Directory User" },
+                    { title: "Financial", desc: "Post Journal Entry to Ledger" }
+                ],
+                kenwayEdge: "We enforce Idempotency keys on every transaction. If the network blips and we send the request twice, your system is smart enough to only process it once. Zero duplicate orders. Zero double-payments."
+            },
+            'N': {
+                letter: 'N',
+                title: 'Notify',
+                subtitle: 'The Resolution',
+                color: 'text-green-600',
+                bgColor: 'bg-green-600',
+                bgLight: 'bg-green-50',
+                border: 'border-green-600',
+                icon: CheckCircle,
+                animation: 'animate-none',
+                description: "Fire-and-forget is a myth. If you don't know it finished, it didn't happen. The Notify stage closes the loop, updating the source system, alerting a human, or logging the audit trail.",
+                valueProp: "Every action needs a receipt.",
+                examples: [
+                    { title: "Write-Back", desc: "Update Salesforce Opportunity to 'Synced'" },
+                    { title: "Alerting", desc: "Post to Slack Channel #sales-wins" },
+                    { title: "Failure Ops", desc: "Create ServiceNow Ticket for failure" }
+                ],
+                kenwayEdge: "We build 'Observable Systems'. Every transaction generates a trace ID. If an order fails, we don't just log an error; we trigger a 'Compensating Transaction' to roll back changes and alert your ops team instantly."
+            }
+        };
+
+        // --- Mock Data for Detail Views ---
+        const FLOW_DETAILS = {
+            'returns': {
+                title: "Auto-Approve Returns",
+                impact: "$200k/yr",
+                description: "Automated decision engine for processing low-risk e-commerce returns without human intervention.",
+                steps: [
+                    { id: 1, stage: "TRIGGER", label: "Case Closed", system: "Salesforce Service Cloud", icon: "Zap", color: "bg-kenway-navy" },
+                    { id: 2, stage: "INGEST", label: "Fetch Profile", system: "Snowflake Data Warehouse", icon: "Database", color: "bg-kenway-blue" },
+                    { id: 3, stage: "THINK", label: "Fraud Check", system: "Azure OpenAI (GPT-4)", icon: "BrainCircuit", color: "bg-purple-600", highlight: true },
+                    { id: 4, stage: "ACT", label: "Issue Refund", system: "Shopify Admin API", icon: "Activity", color: "bg-orange-500" },
+                    { id: 5, stage: "NOTIFY", label: "Email Customer", system: "SendGrid / Twilio", icon: "CheckCircle", color: "bg-green-600" }
+                ],
+                techStack: ["Azure Event Grid", "Logic Apps", "Azure OpenAI Service", "Cosmos DB"],
+                successCriteria: "The NOTIFY stage MUST confirm the transaction ID back to Salesforce Service Cloud. Failure to receive a 200 OK receipt triggers a retry policy (Exponential Backoff, Max 5 attempts)."
+            },
+            // ... (Other flows would be here in prod, falling back to mock if file fetch fails)
+        };
+
 
         // --- Components ---
 
@@ -183,6 +333,91 @@
                         <p className="text-[10px] text-gray-400 mt-1 uppercase tracking-wider">Automation Frameworks</p>
                     </div>
                 </aside>
+            );
+        };
+
+        const MethodologyModal = ({ stepId, onClose }) => {
+            if (!stepId || !METHODOLOGY_DETAILS[stepId]) return null;
+            const data = METHODOLOGY_DETAILS[stepId];
+            const Icon = data.icon;
+
+            return (
+                <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-kenway-navy/60 backdrop-blur-sm animate-fade-in" onClick={onClose}>
+                    <div className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto flex flex-col animate-slide-up" onClick={e => e.stopPropagation()}>
+                        
+                        {/* Header */}
+                        <div className={`p-8 border-b border-gray-100 flex justify-between items-start ${data.bgLight} sticky top-0 z-10 rounded-t-2xl`}>
+                            <div className="flex gap-6 items-center">
+                                <div className={`w-20 h-20 rounded-2xl flex items-center justify-center shadow-lg text-white ${data.bgColor}`}>
+                                    <Icon size={40} className={data.animation === 'animate-spin-slow' ? 'animate-[spin_3s_linear_infinite]' : data.animation} />
+                                </div>
+                                <div>
+                                    <div className="flex items-center gap-3 mb-1">
+                                        <span className={`px-3 py-1 rounded-full text-xs font-bold tracking-wider bg-white border ${data.border} ${data.color}`}>
+                                            STAGE: {data.title.toUpperCase()}
+                                        </span>
+                                    </div>
+                                    <h2 className={`text-3xl font-bold ${data.color} m-0 tracking-tight`}>{data.title}</h2>
+                                    <p className="text-lg text-gray-600 font-medium m-0 mt-1">{data.subtitle}</p>
+                                </div>
+                            </div>
+                            <button onClick={onClose} className="p-2 bg-white rounded-full shadow-sm hover:bg-gray-100 transition-colors text-gray-500">
+                                <X size={24} />
+                            </button>
+                        </div>
+
+                        {/* Content */}
+                        <div className="p-8 md:p-10 space-y-10">
+                            
+                            {/* Main Description */}
+                            <div className="prose max-w-none">
+                                <p className="text-xl font-light leading-relaxed text-gray-800">
+                                    "{data.valueProp}"
+                                </p>
+                                <p className="text-gray-600 leading-relaxed">
+                                    {data.description}
+                                </p>
+                            </div>
+
+                            {/* Two Column Layout */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                
+                                {/* Real World Examples */}
+                                <div className="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                                    <h4 className="flex items-center gap-2 font-bold text-gray-800 mb-6 text-lg border-b border-gray-200 pb-2">
+                                        <Lightbulb size={20} className="text-yellow-600" /> Real-World Examples
+                                    </h4>
+                                    <ul className="space-y-4">
+                                        {data.examples.map((ex, i) => (
+                                            <li key={i} className="flex flex-col gap-1">
+                                                <span className="font-semibold text-gray-800 text-sm">{ex.title}</span>
+                                                <span className="text-gray-600 text-sm bg-white p-2 rounded border border-gray-100 shadow-sm">
+                                                    {ex.desc}
+                                                </span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+
+                                {/* The Kenway Edge */}
+                                <div className={`p-6 rounded-xl border ${data.border} ${data.bgLight}`}>
+                                    <h4 className={`flex items-center gap-2 font-bold ${data.color} mb-4 text-lg`}>
+                                        <ShieldCheck size={22} /> The Kenway Edge
+                                    </h4>
+                                    <p className="text-gray-700 leading-relaxed text-sm">
+                                        {data.kenwayEdge}
+                                    </p>
+                                    <div className="mt-6 pt-6 border-t border-gray-200/50">
+                                        <button className={`w-full py-2 px-4 rounded font-bold text-sm bg-white shadow-sm border ${data.border} ${data.color} hover:bg-opacity-50 transition-colors`}>
+                                            Discuss {data.title} Strategies &rarr;
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
             );
         };
 
@@ -288,19 +523,25 @@
             );
         };
 
-        const TitanCard = ({ letter, title, icon: Icon, desc, color }) => (
-            <div className="card-hover relative p-8 bg-white border border-gray-100 rounded-xl shadow-sm transition-all duration-300 h-full flex flex-col">
-                <div className={`absolute top-0 right-0 p-4 opacity-10 ${color}`}>
+        const TitanCard = ({ letter, title, icon: Icon, desc, color, onClick }) => (
+            <div 
+                onClick={onClick}
+                className="card-hover relative p-8 bg-white border border-gray-100 rounded-xl shadow-sm transition-all duration-300 h-full flex flex-col cursor-pointer group"
+            >
+                <div className={`absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity ${color}`}>
                     <Icon size={80} />
                 </div>
                 <div className="flex items-center gap-4 mb-6">
-                    <span className={`flex shrink-0 items-center justify-center w-14 h-14 text-2xl font-bold text-white rounded-lg shadow-md ${color.replace('text-', 'bg-')}`}>
+                    <span className={`flex shrink-0 items-center justify-center w-14 h-14 text-2xl font-bold text-white rounded-lg shadow-md group-hover:scale-110 transition-transform ${color.replace('text-', 'bg-')}`}>
                         {letter}
                     </span>
                     <h3 className="text-2xl font-bold text-kenway-navy m-0 tracking-tight">{title}</h3>
                 </div>
                 <div className="text-sm text-kenway-blue leading-relaxed font-medium flex-1 flex flex-col">
                     {desc}
+                </div>
+                <div className="mt-4 text-xs font-bold text-gray-400 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
+                    Explore Stage <ArrowRight size={12}/>
                 </div>
             </div>
         );
@@ -316,7 +557,12 @@
                     </div>
 
                     {/* Orbit Ring */}
-                    <div className="absolute w-3/4 h-3/4 border-2 border-dashed border-gray-300 rounded-full animate-[spin_80s_linear_infinite]"></div>
+                    <div className="absolute w-full h-full pointer-events-none">
+                        <svg viewBox="0 0 512 512" className="w-full h-full animate-[spin_80s_linear_infinite]">
+                            {/* Dashed Ring */}
+                            <circle cx="256" cy="256" r="192" fill="none" stroke="#cbd5e1" strokeWidth="2" strokeDasharray="8 8" />
+                        </svg>
+                    </div>
 
                     {/* Nodes */}
                     <div className="absolute top-0 left-1/2 -translate-x-1/2 translate-y-4 flex flex-col items-center">
@@ -569,6 +815,7 @@
             const [mobileOpen, setMobileOpen] = useState(false);
             const [activeSection, setActiveSection] = useState('intro');
             const [selectedFlowId, setSelectedFlowId] = useState(null);
+            const [selectedMethodology, setSelectedMethodology] = useState(null);
             const [inventoryData, setInventoryData] = useState(null);
             const [loading, setLoading] = useState(true);
 
@@ -585,7 +832,8 @@
                     })
                     .catch(err => {
                         console.error("Failed to load inventory:", err);
-                        // Optionally set an error state to display to user
+                        // Fallback to static data if JSON fetch fails
+                        setInventoryData(FLOW_DETAILS);
                         setLoading(false);
                     });
             }, []);
@@ -633,6 +881,7 @@
 
             const handleCloseModal = () => {
                 setSelectedFlowId(null);
+                setSelectedMethodology(null);
                 const url = new URL(window.location);
                 url.searchParams.delete('flow');
                 window.history.pushState({}, '', url);
@@ -655,11 +904,18 @@
                         </button>
                     </div>
 
-                    {/* Architecture Modal */}
+                    {/* Modals */}
                     {selectedFlowId && inventoryData && (
                         <ArchitectureModal 
                             flowData={inventoryData[selectedFlowId]} 
                             onClose={handleCloseModal} 
+                        />
+                    )}
+                    
+                    {selectedMethodology && (
+                        <MethodologyModal
+                            stepId={selectedMethodology}
+                            onClose={handleCloseModal}
                         />
                     )}
 
@@ -711,6 +967,7 @@
                                 <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mt-10 not-prose">
                                     <TitanCard 
                                         letter="T" title="Trigger" color="text-kenway-navy" icon={Zap}
+                                        onClick={() => setSelectedMethodology('T1')}
                                         desc={
                                             <>
                                                 <div>
@@ -730,6 +987,7 @@
                                     />
                                     <TitanCard 
                                         letter="I" title="Ingest" color="text-kenway-blue" icon={Database}
+                                        onClick={() => setSelectedMethodology('I')}
                                         desc={
                                             <>
                                                 <div>
@@ -750,6 +1008,7 @@
                                     
                                     <TitanCard 
                                         letter="T" title="Think" color="text-purple-600" icon={BrainCircuit}
+                                        onClick={() => setSelectedMethodology('T2')}
                                         desc={
                                             <>
                                                 <div>
@@ -770,6 +1029,7 @@
                                     
                                     <TitanCard 
                                         letter="A" title="Act" color="text-orange-500" icon={Activity}
+                                        onClick={() => setSelectedMethodology('A')}
                                         desc={
                                             <>
                                                 <div>
@@ -787,6 +1047,7 @@
                                     />
                                     <TitanCard 
                                         letter="N" title="Notify" color="text-green-600" icon={CheckCircle}
+                                        onClick={() => setSelectedMethodology('N')}
                                         desc={
                                             <>
                                                 <div>
