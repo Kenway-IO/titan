@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+vendor/
+.venv/
+venv/
+
+# Build outputs
+dist/
+build/
+*.o
+*.pyc
+__pycache__/
+
+# IDE/Editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Environment & secrets
+.env
+.env.local
+*.pem
+*.key
+
+# Logs & temp files
+*.log
+logs/
+tmp/
+*.tmp
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Package lock files (optional, depends on preference)
+# package-lock.json
+# yarn.lock
