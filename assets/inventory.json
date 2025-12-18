@@ -1,0 +1,184 @@
+{
+    "returns": {
+        "title": "Auto-Approve Returns",
+        "impact": "$200k/yr",
+        "description": "Automated decision engine for processing low-risk e-commerce returns without human intervention.",
+        "steps": [
+            { "id": 1, "stage": "TRIGGER", "label": "Case Closed", "system": "Salesforce Service Cloud", "icon": "Zap", "color": "bg-kenway-navy" },
+            { "id": 2, "stage": "INGEST", "label": "Fetch Profile", "system": "Snowflake Data Warehouse", "icon": "Database", "color": "bg-kenway-blue" },
+            { "id": 3, "stage": "THINK", "label": "Fraud Check", "system": "Azure OpenAI (GPT-4)", "icon": "BrainCircuit", "color": "bg-purple-600", "highlight": true },
+            { "id": 4, "stage": "ACT", "label": "Issue Refund", "system": "Shopify Admin API", "icon": "Activity", "color": "bg-orange-500" },
+            { "id": 5, "stage": "NOTIFY", "label": "Email Customer", "system": "SendGrid / Twilio", "icon": "CheckCircle", "color": "bg-green-600" }
+        ],
+        "techStack": ["Azure Event Grid", "Logic Apps", "Azure OpenAI Service", "Cosmos DB"],
+        "successCriteria": "The NOTIFY stage MUST confirm the transaction ID back to Salesforce Service Cloud. Failure to receive a 200 OK receipt triggers a retry policy (Exponential Backoff, Max 5 attempts)."
+    },
+    "invoice": {
+        "title": "Vendor Invoice Scan",
+        "impact": "$85k/yr",
+        "description": "OCR-based extraction and 3-way matching for accounts payable automation.",
+        "steps": [
+            { "id": 1, "stage": "TRIGGER", "label": "Email Received", "system": "Exchange Online", "icon": "Zap", "color": "bg-kenway-navy" },
+            { "id": 2, "stage": "INGEST", "label": "Parse PDF", "system": "Azure AI Document Intelligence", "icon": "Database", "color": "bg-kenway-blue" },
+            { "id": 3, "stage": "THINK", "label": "Match PO", "system": "SAP S/4HANA (Lookup)", "icon": "BrainCircuit", "color": "bg-purple-600", "highlight": true },
+            { "id": 4, "stage": "ACT", "label": "Post Invoice", "system": "SAP BAPI / OData", "icon": "Activity", "color": "bg-orange-500" },
+            { "id": 5, "stage": "NOTIFY", "label": "Update Portal", "system": "Vendor Portal App", "icon": "CheckCircle", "color": "bg-green-600" }
+        ],
+        "techStack": ["Azure Functions", "Form Recognizer", "Service Bus", "SAP Integration Suite"],
+        "successCriteria": "The NOTIFY stage MUST return the SAP Document ID to the Vendor Portal. Exceptions are routed to the AP Exception Queue for manual review."
+    },
+    "onboard": {
+        "title": "Employee Onboard",
+        "impact": "$40k/yr",
+        "description": "Orchestrated provisioning of user accounts across Active Directory and SaaS tools.",
+        "steps": [
+            { "id": 1, "stage": "TRIGGER", "label": "Hired Status", "system": "Workday HCM", "icon": "Zap", "color": "bg-kenway-navy" },
+            { "id": 2, "stage": "INGEST", "label": "Get Roles", "system": "HR Dept Matrix", "icon": "Database", "color": "bg-kenway-blue" },
+            { "id": 3, "stage": "THINK", "label": "Assign Groups", "system": "Identity Governance Engine", "icon": "BrainCircuit", "color": "bg-purple-600" },
+            { "id": 4, "stage": "ACT", "label": "Create User", "system": "Entra ID (Azure AD)", "icon": "Activity", "color": "bg-orange-500" },
+            { "id": 5, "stage": "NOTIFY", "label": "Welcome Msg", "system": "Slack / Teams", "icon": "CheckCircle", "color": "bg-green-600" }
+        ],
+        "techStack": ["Microsoft Graph API", "Power Automate", "Key Vault"],
+        "successCriteria": "The NOTIFY stage MUST deliver a welcome message to the user's Slack channel. If Slack is down, the system falls back to Email notification."
+    },
+    "smartRework": {
+        "title": "Smart Rework Analysis",
+        "impact": "$450k/yr",
+        "description": "Automated quality control decisioning using computer vision to determine if manufacturing defects require rework or scrap.",
+        "steps": [
+            { "id": 1, "stage": "TRIGGER", "label": "Defect Logged", "system": "SAP S/4HANA", "icon": "Zap", "color": "bg-kenway-navy" },
+            { "id": 2, "stage": "INGEST", "label": "Fetch Images", "system": "Azure Blob Storage", "icon": "Database", "color": "bg-kenway-blue" },
+            { "id": 3, "stage": "THINK", "label": "Analyze Severity", "system": "Azure AI Vision", "icon": "BrainCircuit", "color": "bg-purple-600", "highlight": true },
+            { "id": 4, "stage": "ACT", "label": "Route Order", "system": "SAP S/4HANA", "icon": "Activity", "color": "bg-orange-500" },
+            { "id": 5, "stage": "NOTIFY", "label": "Alert Floor", "system": "Microsoft Teams", "icon": "CheckCircle", "color": "bg-green-600" }
+        ],
+        "techStack": ["Azure Event Grid", "Logic Apps", "Azure AI Vision", "SAP Event Mesh"],
+        "successCriteria": "The ACT stage must successfully update the SAP Notification Status to 'Rework' or 'Scrap' and return a Transaction ID."
+    },
+    "churnShield": {
+        "title": "Churn Shield Retention",
+        "impact": "$1.2M/yr",
+        "description": "Real-time retention offer generation triggered by usage drops, leveraging contract data and sentiment analysis.",
+        "steps": [
+            { "id": 1, "stage": "TRIGGER", "label": "Usage Drop", "system": "Salesforce Data Cloud", "icon": "Zap", "color": "bg-kenway-navy" },
+            { "id": 2, "stage": "INGEST", "label": "Hydrate Context", "system": "Azure AI Doc Intel", "icon": "Database", "color": "bg-kenway-blue" },
+            { "id": 3, "stage": "THINK", "label": "Draft Offer", "system": "Azure OpenAI (GPT-4)", "icon": "BrainCircuit", "color": "bg-purple-600", "highlight": true },
+            { "id": 4, "stage": "ACT", "label": "Create Quote", "system": "Salesforce CPQ", "icon": "Activity", "color": "bg-orange-500" },
+            { "id": 5, "stage": "NOTIFY", "label": "Prompt AE", "system": "Slack", "icon": "CheckCircle", "color": "bg-green-600" }
+        ],
+        "techStack": ["Salesforce Platform Events", "Azure AI Document Intelligence", "Azure OpenAI", "Logic Apps"],
+        "successCriteria": "A Draft Quote ID must be generated in Salesforce CPQ and successfully linked to the Account record."
+    },
+    "supplyChainShock": {
+        "title": "Supply Chain Shock Allocator",
+        "impact": "$2.5M/yr",
+        "description": "Automatic inventory reallocation for high-priority customers when supplier delivery delays are confirmed.",
+        "steps": [
+            { "id": 1, "stage": "TRIGGER", "label": "Delay Confirmed", "system": "Dynamics 365 F&SC", "icon": "Zap", "color": "bg-kenway-navy" },
+            { "id": 2, "stage": "INGEST", "label": "Check Demand", "system": "Azure Synapse", "icon": "Database", "color": "bg-kenway-blue" },
+            { "id": 3, "stage": "THINK", "label": "Optimize Alloc", "system": "Azure Machine Learning", "icon": "BrainCircuit", "color": "bg-purple-600", "highlight": true },
+            { "id": 4, "stage": "ACT", "label": "Reserve Stock", "system": "Dynamics 365 F&SC", "icon": "Activity", "color": "bg-orange-500" },
+            { "id": 5, "stage": "NOTIFY", "label": "Alert Sales", "system": "Outlook", "icon": "CheckCircle", "color": "bg-green-600" }
+        ],
+        "techStack": ["Dual-write", "Azure Synapse Analytics", "Azure Functions", "SendGrid"],
+        "successCriteria": "Inventory reservation records in Dynamics 365 must reflect the new allocation logic without concurrency errors."
+    },
+    "vendorVetting": {
+        "title": "Vendor Vetting & Onboarding",
+        "impact": "$80k/yr",
+        "description": "Autonomous compliance verification of new vendors by extracting and validating W-9 and insurance documents.",
+        "steps": [
+            { "id": 1, "stage": "TRIGGER", "label": "Vendor Created", "system": "Dynamics 365 BC", "icon": "Zap", "color": "bg-kenway-navy" },
+            { "id": 2, "stage": "INGEST", "label": "Extract Docs", "system": "Microsoft Graph API", "icon": "Database", "color": "bg-kenway-blue" },
+            { "id": 3, "stage": "THINK", "label": "Verify Compliance", "system": "Azure AI Doc Intel", "icon": "BrainCircuit", "color": "bg-purple-600", "highlight": true },
+            { "id": 4, "stage": "ACT", "label": "Unblock Vendor", "system": "Dynamics 365 BC", "icon": "Activity", "color": "bg-orange-500" },
+            { "id": 5, "stage": "NOTIFY", "label": "Confirm Setup", "system": "Dynamics 365 Marketing", "icon": "CheckCircle", "color": "bg-green-600" }
+        ],
+        "techStack": ["Logic Apps", "Azure AI Document Intelligence", "Business Central API"],
+        "successCriteria": "The 'Blocked' field on the Vendor Card in Business Central must be set to Empty/False upon successful validation."
+    },
+    "competitorRadar": {
+        "title": "Competitor Intelligence Radar",
+        "impact": "$300k/yr",
+        "description": "Extracting structured competitive pricing intelligence from unstructured sales visit notes.",
+        "steps": [
+            { "id": 1, "stage": "TRIGGER", "label": "Note Created", "system": "Dynamics 365 Sales", "icon": "Zap", "color": "bg-kenway-navy" },
+            { "id": 2, "stage": "INGEST", "label": "Hydrate History", "system": "Azure Cosmos DB", "icon": "Database", "color": "bg-kenway-blue" },
+            { "id": 3, "stage": "THINK", "label": "Extract Intel", "system": "Azure AI Language", "icon": "BrainCircuit", "color": "bg-purple-600", "highlight": true },
+            { "id": 4, "stage": "ACT", "label": "Update Battlecard", "system": "Dynamics 365 Sales", "icon": "Activity", "color": "bg-orange-500" },
+            { "id": 5, "stage": "NOTIFY", "label": "Alert Strategy", "system": "Power Automate", "icon": "CheckCircle", "color": "bg-green-600" }
+        ],
+        "techStack": ["Dataverse Webhooks", "Azure AI Language", "Azure Functions", "Power Automate"],
+        "successCriteria": "A new structured record must be written to the 'Competitor Intelligence' custom entity in Dynamics 365."
+    },
+    "commodityArbitrage": {
+        "title": "Commodity Arbitrage Accrual",
+        "impact": "$150k/yr",
+        "description": "Real-time calculation of financial accruals based on the spot price of commodities at the exact moment of goods receipt.",
+        "steps": [
+            { "id": 1, "stage": "TRIGGER", "label": "Goods Receipt", "system": "SAP S/4HANA", "icon": "Zap", "color": "bg-kenway-navy" },
+            { "id": 2, "stage": "INGEST", "label": "Fetch Market Data", "system": "Bloomberg API", "icon": "Database", "color": "bg-kenway-blue" },
+            { "id": 3, "stage": "THINK", "label": "Calculate Accrual", "system": "Azure Functions", "icon": "BrainCircuit", "color": "bg-purple-600", "highlight": true },
+            { "id": 4, "stage": "ACT", "label": "Post Journal", "system": "SAP S/4HANA", "icon": "Activity", "color": "bg-orange-500" },
+            { "id": 5, "stage": "NOTIFY", "label": "Report Variance", "system": "PowerBI", "icon": "CheckCircle", "color": "bg-green-600" }
+        ],
+        "techStack": ["SAP Event Mesh", "Azure API Management", "Azure Functions", "PowerBI"],
+        "successCriteria": "A Journal Entry Document Number must be successfully returned from SAP Finance (FI) module."
+    },
+    "disasterTriage": {
+        "title": "Disaster Triage Dispatch",
+        "impact": "High Risk",
+        "description": "Geospatial clustering of high-volume outage reports to auto-dispatch field crews to the epicenter.",
+        "steps": [
+            { "id": 1, "stage": "TRIGGER", "label": "Case Spike", "system": "Salesforce Service Cloud", "icon": "Zap", "color": "bg-kenway-navy" },
+            { "id": 2, "stage": "INGEST", "label": "Geo-Tagging", "system": "Azure Maps", "icon": "Database", "color": "bg-kenway-blue" },
+            { "id": 3, "stage": "THINK", "label": "Cluster Analysis", "system": "Azure Databricks", "icon": "BrainCircuit", "color": "bg-purple-600", "highlight": true },
+            { "id": 4, "stage": "ACT", "label": "Create Work Order", "system": "Salesforce FSL", "icon": "Activity", "color": "bg-orange-500" },
+            { "id": 5, "stage": "NOTIFY", "label": "Mass SMS", "system": "Twilio", "icon": "CheckCircle", "color": "bg-green-600" }
+        ],
+        "techStack": ["Salesforce CDC", "Azure Maps", "Azure Databricks", "Azure Communication Services"],
+        "successCriteria": "A Parent Work Order must be created in Salesforce Field Service Lightning and linked to the child Cases."
+    },
+    "visualRMA": {
+        "title": "Visual RMA Auto-Approval",
+        "impact": "$120k/yr",
+        "description": "Instant validation of return requests using computer vision to analyze customer-uploaded photos of damaged goods.",
+        "steps": [
+            { "id": 1, "stage": "TRIGGER", "label": "RMA Requested", "system": "Dynamics 365 F&SC", "icon": "Zap", "color": "bg-kenway-navy" },
+            { "id": 2, "stage": "INGEST", "label": "Process Image", "system": "Azure Computer Vision", "icon": "Database", "color": "bg-kenway-blue" },
+            { "id": 3, "stage": "THINK", "label": "Detect Damage", "system": "Azure Custom Vision", "icon": "BrainCircuit", "color": "bg-purple-600", "highlight": true },
+            { "id": 4, "stage": "ACT", "label": "Issue Label", "system": "FedEx API", "icon": "Activity", "color": "bg-orange-500" },
+            { "id": 5, "stage": "NOTIFY", "label": "Send QR Code", "system": "SendGrid", "icon": "CheckCircle", "color": "bg-green-600" }
+        ],
+        "techStack": ["Logic Apps", "Azure Custom Vision", "Dynamics 365 OData", "SendGrid"],
+        "successCriteria": "The RMA Status in Dynamics 365 must update to 'Approved - Awaiting Receipt' and a shipping tracking number generated."
+    },
+    "wealthRouter": {
+        "title": "Wealth Client Router",
+        "impact": "$500k/yr",
+        "description": "Intelligent routing of new leads to Private Wealth teams based on estimated net worth and external property data.",
+        "steps": [
+            { "id": 1, "stage": "TRIGGER", "label": "Lead Capture", "system": "Dynamics 365 CRM", "icon": "Zap", "color": "bg-kenway-navy" },
+            { "id": 2, "stage": "INGEST", "label": "Enrich Profile", "system": "External Property APIs", "icon": "Database", "color": "bg-kenway-blue" },
+            { "id": 3, "stage": "THINK", "label": "Score Lead", "system": "Azure AI", "icon": "BrainCircuit", "color": "bg-purple-600", "highlight": true },
+            { "id": 4, "stage": "ACT", "label": "Assign Owner", "system": "Dynamics 365 CRM", "icon": "Activity", "color": "bg-orange-500" },
+            { "id": 5, "stage": "NOTIFY", "label": "Urgent Alert", "system": "Microsoft Teams", "icon": "CheckCircle", "color": "bg-green-600" }
+        ],
+        "techStack": ["Power Automate", "Azure SQL", "Azure AI", "Dynamics 365 Web API"],
+        "successCriteria": "The Lead 'Owner' field in Dynamics 365 must be updated to the UUID of the Private Wealth Team."
+    },
+    "invoiceSentinel": {
+        "title": "Invoice Sentinel Fraud Check",
+        "impact": "$900k/yr",
+        "description": "Real-time anomaly detection on AP invoices to catch Benford's Law violations or unusual vendor behavior.",
+        "steps": [
+            { "id": 1, "stage": "TRIGGER", "label": "Invoice Posted", "system": "SAP S/4HANA", "icon": "Zap", "color": "bg-kenway-navy" },
+            { "id": 2, "stage": "INGEST", "label": "Hydrate Stats", "system": "Azure Cosmos DB", "icon": "Database", "color": "bg-kenway-blue" },
+            { "id": 3, "stage": "THINK", "label": "Fraud Detect", "system": "Azure Anomaly Detector", "icon": "BrainCircuit", "color": "bg-purple-600", "highlight": true },
+            { "id": 4, "stage": "ACT", "label": "Block Payment", "system": "SAP S/4HANA", "icon": "Activity", "color": "bg-orange-500" },
+            { "id": 5, "stage": "NOTIFY", "label": "Audit Request", "system": "ServiceNow", "icon": "CheckCircle", "color": "bg-green-600" }
+        ],
+        "techStack": ["SAP Event Mesh", "Azure Functions", "Azure Anomaly Detector", "ServiceNow API"],
+        "successCriteria": "The SAP Invoice document must have the 'Payment Block' field set to 'A' (Audit) if a high fraud score is detected."
+    }
+}
