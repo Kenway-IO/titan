@@ -157,7 +157,7 @@
                             <span className="text-xs text-kenway-blue font-medium tracking-wider">FRAMEWORK</span>
                         </div>
                         <div className="flex items-center gap-3">
-                            <img src="assets/Kenway%20IO%20Lab.jpg" alt="IO Lab" className="h-12 w-auto rounded bg-white/10" />
+                            <img src="assets/Kenway%20IO%20Lab.jpg" alt="IO Lab" className="h-12 w-auto rounded bg-white/10" onError={(e) => e.target.style.display = 'none'} />
                             <button onClick={() => setMobileOpen(false)} className="md:hidden text-white opacity-80 hover:opacity-100">
                                 <X size={24} />
                             </button>
@@ -179,8 +179,8 @@
                         ))}
                     </nav>
                     <div className="absolute bottom-0 w-full p-6 border-t border-gray-100 bg-gray-50">
-                        <p className="text-xs text-gray-500 font-medium">© 2024 Strategy & Architecture</p>
-                        <p className="text-[10px] text-gray-400 mt-1 uppercase tracking-wider">Internal Confidential</p>
+                        <p className="text-xs text-gray-500 font-medium">© 2025 CEAD Practice</p>
+                        <p className="text-[10px] text-gray-400 mt-1 uppercase tracking-wider">Automation Frameworks</p>
                     </div>
                 </aside>
             );
@@ -575,15 +575,41 @@
             // Fetch Data
             useEffect(() => {
                 fetch('assets/inventory.json')
-                    .then(res => res.json())
+                    .then(res => {
+                        if (!res.ok) throw new Error("Network response was not ok");
+                        return res.json();
+                    })
                     .then(data => {
                         setInventoryData(data);
                         setLoading(false);
                     })
                     .catch(err => {
                         console.error("Failed to load inventory:", err);
+                        // Optionally set an error state to display to user
                         setLoading(false);
                     });
+            }, []);
+
+            // Scroll Spy Logic
+            useEffect(() => {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            setActiveSection(entry.target.id);
+                        }
+                    });
+                }, {
+                    rootMargin: "-20% 0px -60% 0px", // Trigger when top of section is 20% down the screen, exit when it's 60% up
+                    threshold: 0.1
+                });
+
+                const sectionIds = ['intro', 'methodology', 'loop', 'inventory', 'roi'];
+                sectionIds.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) observer.observe(el);
+                });
+
+                return () => observer.disconnect();
             }, []);
 
             // Handle URL params for deep linking
