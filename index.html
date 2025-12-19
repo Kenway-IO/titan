@@ -22,6 +22,7 @@
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
+                        classic: ['Cinzel', 'serif'], // Added classic serif font
                     },
                     animation: {
                         'fade-in': 'fadeIn 0.3s ease-out',
@@ -56,7 +57,7 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         body { font-family: 'Inter', sans-serif; }
@@ -1160,19 +1161,32 @@
                     <main className="md:ml-64 pt-20 md:pt-0">
                         {/* Changed max-w-5xl to max-w-7xl for wider layout */}
                         <div className="max-w-7xl mx-auto px-8 py-16 prose prose-slate max-w-none">
-                            
+             
                             {/* Hero Section */}
                             <section id="intro" className="mb-6 max-w-5xl mx-auto">
-                                <div className="hero-gradient text-white p-12 rounded-2xl mb-10 shadow-xl relative overflow-hidden">
-                                    <div className="relative z-10">
-                                        <h1 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight !text-white !mt-0 text-gradient-red">TITAN Framework</h1>
-                                        <p className="!text-cyan-200 text-xl leading-relaxed !mb-0 max-w-2xl font-medium">
+                                <div className="bg-kenway-navy text-white p-12 rounded-2xl mb-10 shadow-xl relative overflow-hidden flex items-center min-h-[320px]">
+                                    
+                                    {/* Text Content */}
+                                    <div className="relative z-20 max-w-xl">
+                                        <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight !text-white !mt-0 text-gradient-red font-classic">TITAN Framework</h1>
+                                        <p className="!text-cyan-200 text-xl leading-relaxed !mb-0 font-medium">
                                             The enterprise standard for building <strong>Cognitive Integration Loops</strong>. 
                                             Move beyond "dumb pipes" to autonomous systems that think and act.
                                         </p>
                                     </div>
-                                    <div className="absolute right-0 bottom-0 opacity-10 transform translate-x-12 translate-y-12">
-                                        <BrainCircuit size={300} />
+
+                                    {/* Image Container (Replaces BrainCircuit) */}
+                                    <div className="absolute top-0 right-0 w-2/3 h-full z-10">
+                                        <img 
+                                            src="./assets/TitanImage.jpg" 
+                                            alt="Hero Background" 
+                                            className="w-full h-full object-contain object-right opacity-90"
+                                            onError={(e) => e.target.style.opacity = 0} 
+                                        />
+                                        {/* Blue Overlay */}
+                                        <div className="absolute inset-0 bg-kenway-blue/40 mix-blend-overlay"></div>
+                                        {/* Gradient fade to blend with navy background on the left */}
+                                        <div className="absolute inset-0 bg-gradient-to-r from-kenway-navy via-kenway-navy/60 to-transparent"></div>
                                     </div>
                                 </div>
                                 
