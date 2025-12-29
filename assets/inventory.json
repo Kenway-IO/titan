@@ -180,5 +180,19 @@
         ],
         "techStack": ["SAP Event Mesh", "Azure Functions", "Azure Anomaly Detector", "ServiceNow API"],
         "successCriteria": "The SAP Invoice document must have the 'Payment Block' field set to 'A' (Audit) if a high fraud score is detected."
+    },
+    "prospect-insights": {
+        "title": "Prospect Intelligience",
+        "impact": "150k/yr",
+        "description": "When new interaction / contact in Salesforce is added, triggers the consolidation of that new information and data into consolidated report",
+        "steps": [
+            { "id": 1, "stage": "TRIGGER", "label": "Interaction Created", "system": "Salesforce", "icon": "Zap", "color": "bg-kenway-navy" },
+            { "id": 2, "stage": "INGEST", "label": "Fetch Prospect Profile, Parse Interaction Notes", "system": "Azure Blob Storage, Salesforce", "icon": "Database", "color": "bg-kenway-blue" },
+            { "id": 3, "stage": "THINK", "label": "Consolidate Insights, Generate Summary Report", "system": "Claude Opus 4.5", "icon": "BrainCircuit", "color": "bg-purple-600", "highlight": true },
+            { "id": 4, "stage": "ACT", "label": "Email to Account Exectuive and Interaction Participant", "system": "Microsoft Graph", "icon": "Activity", "color": "bg-orange-500" },
+            { "id": 5, "stage": "NOTIFY", "label": "Alert Team", "system": "Microsoft Teams, Outlook", "icon": "CheckCircle", "color": "bg-green-600" }
+        ],
+        "techStack": ["Azure Function Apps", "Claude Opus 4.5 API"],
+        "successCriteria": "Date of new interaction included in Prospect Summary"
     }
 }

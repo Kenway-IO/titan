@@ -114,12 +114,153 @@
             background-color: #cbd5e1;
             z-index: 0;
         }
-        .flow-node {
-            transition: all 0.3s ease;
+
+        /* Animated connecting line */
+        .flow-connecting-line {
+            position: relative;
+            overflow: hidden;
         }
+
+        .flow-connecting-line::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                transparent 0%,
+                rgba(0, 124, 192, 0.3) 50%,
+                transparent 100%);
+            animation: line-shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes line-shimmer {
+            0% {
+                left: -100%;
+            }
+            50% {
+                left: 100%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+
+        /* Enhanced Flow Node Styles */
+        .flow-node {
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: flow-node-entrance 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+            overflow: hidden;
+        }
+
+        .flow-node::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 1rem;
+            background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 60%);
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+        }
+
+        .flow-node::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(255, 255, 255, 0.4) 50%,
+                transparent 70%
+            );
+            transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            transition: transform 0.6s ease;
+        }
+
+        .flow-node:hover::after {
+            transform: translateX(100%) translateY(100%) rotate(45deg);
+        }
+
         .flow-node:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transform: translateY(-8px) scale(1.08);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15),
+                        0 10px 10px -5px rgba(0, 0, 0, 0.1),
+                        0 0 30px rgba(0, 124, 192, 0.3);
+        }
+
+        .flow-node:hover::before {
+            opacity: 0.8;
+        }
+
+        /* Pulse animation for highlighted nodes */
+        .flow-node-highlight {
+            animation: flow-node-entrance 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) backwards,
+                       pulse-glow 2s ease-in-out infinite;
+        }
+
+        /* Flow node label box */
+        .flow-node-label {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: flow-label-entrance 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+        }
+
+        .flow-node:hover + .flow-node-label,
+        .group:hover .flow-node-label {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+                        0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            border-color: #007cc0;
+        }
+
+        /* Stagger animations */
+        .flow-node:nth-child(1) { animation-delay: 0s; }
+        .flow-node:nth-child(2) { animation-delay: 0.1s; }
+        .flow-node:nth-child(3) { animation-delay: 0.2s; }
+        .flow-node:nth-child(4) { animation-delay: 0.3s; }
+        .flow-node:nth-child(5) { animation-delay: 0.4s; }
+
+        .flow-node-label:nth-child(1) { animation-delay: 0.1s; }
+        .flow-node-label:nth-child(2) { animation-delay: 0.2s; }
+        .flow-node-label:nth-child(3) { animation-delay: 0.3s; }
+        .flow-node-label:nth-child(4) { animation-delay: 0.4s; }
+        .flow-node-label:nth-child(5) { animation-delay: 0.5s; }
+
+        @keyframes flow-node-entrance {
+            0% {
+                opacity: 0;
+                transform: translateY(20px) scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes flow-label-entrance {
+            0% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% {
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+                            0 0 20px rgba(147, 51, 234, 0.4);
+            }
+            50% {
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+                            0 0 40px rgba(147, 51, 234, 0.6);
+            }
         }
         
         /* Modal Scrollbar */
@@ -530,41 +671,47 @@
                                 <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-8">Data Flow Diagram</h3>
                                 
                                 {/* Desktop Flow */}
-                                <div className="hidden md:flex justify-between items-center relative">
+                                <div className="hidden md:block relative px-8 min-h-[200px]">
                                     {/* Connecting Line */}
-                                    <div className="absolute top-1/2 left-0 w-full h-1 bg-gray-200 -z-0 rounded"></div>
-                                    
-                                    {data.steps.map((step, idx) => {
-                                        const StepIcon = IconMap[step.icon] || Zap; // Fallback to Zap
-                                        return (
-                                            <div key={idx} className="relative z-10 flex flex-col items-center group cursor-default">
-                                                <div className={`w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg text-white mb-4 flow-node ${step.color} ${step.highlight ? 'ring-4 ring-purple-100 ring-offset-2' : ''}`}>
-                                                    <StepIcon size={28} />
+                                    <div className="bg-gray-300 rounded flow-connecting-line" style={{ position: 'absolute', top: '32px', height: '3px', left: '48px', right: '32px', zIndex: 0 }}></div>
+
+                                    <div className="flex justify-evenly items-start relative">
+                                        {data.steps.map((step, idx) => {
+                                            const StepIcon = IconMap[step.icon] || Zap; // Fallback to Zap
+                                            return (
+                                                <div key={idx} className="relative flex flex-col items-center group cursor-default" style={{ zIndex: 10 }}>
+                                                    <div className={`w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg text-white mb-4 flow-node ${step.highlight ? 'flow-node-highlight' : ''} ${step.color} ${step.highlight ? 'ring-4 ring-purple-100 ring-offset-2' : ''}`}
+                                                         style={{ animationDelay: `${idx * 0.1}s` }}>
+                                                        <StepIcon size={28} className="relative z-10" />
+                                                    </div>
+                                                    <div className="text-center bg-white p-3 rounded-lg border border-gray-100 shadow-sm min-w-[120px] max-w-[160px] flow-node-label"
+                                                         style={{ animationDelay: `${idx * 0.1 + 0.1}s` }}>
+                                                        <div className={`text-[10px] font-bold mb-1 ${step.color.replace('bg-', 'text-')}`}>{step.stage}</div>
+                                                        <div className="font-bold text-sm text-kenway-navy leading-tight mb-1">{step.label}</div>
+                                                        <div className="text-[10px] text-gray-500 mt-1 leading-tight">{step.system}</div>
+                                                    </div>
                                                 </div>
-                                                <div className="text-center bg-white p-2 rounded-lg border border-gray-100 shadow-sm w-32">
-                                                    <div className={`text-[10px] font-bold mb-1 ${step.color.replace('bg-', 'text-')}`}>{step.stage}</div>
-                                                    <div className="font-bold text-sm text-kenway-navy leading-tight">{step.label}</div>
-                                                    <div className="text-[10px] text-gray-500 mt-1 truncate">{step.system}</div>
-                                                </div>
-                                            </div>
-                                        );
-                                    })}
+                                            );
+                                        })}
+                                    </div>
                                 </div>
 
                                 {/* Mobile Flow */}
                                 <div className="md:hidden flex flex-col gap-8 relative">
-                                    <div className="absolute left-8 top-0 h-full w-1 bg-gray-200 -z-0"></div>
+                                    <div className="absolute left-8 top-0 h-full w-1 bg-gray-200 -z-0 flow-connecting-line"></div>
                                     {data.steps.map((step, idx) => {
                                         const StepIcon = IconMap[step.icon] || Zap;
                                         return (
-                                            <div key={idx} className="relative z-10 flex items-center gap-4">
-                                                <div className={`w-16 h-16 shrink-0 rounded-2xl flex items-center justify-center shadow-lg text-white ${step.color}`}>
-                                                    <StepIcon size={28} />
+                                            <div key={idx} className="relative z-10 flex items-center gap-4 group">
+                                                <div className={`w-16 h-16 shrink-0 rounded-2xl flex items-center justify-center shadow-lg text-white flow-node ${step.highlight ? 'flow-node-highlight' : ''} ${step.color} ${step.highlight ? 'ring-4 ring-purple-100 ring-offset-2' : ''}`}
+                                                     style={{ animationDelay: `${idx * 0.1}s` }}>
+                                                    <StepIcon size={28} className="relative z-10" />
                                                 </div>
-                                                <div className="bg-white p-3 rounded-lg border border-gray-100 shadow-sm flex-grow">
+                                                <div className="bg-white p-3 rounded-lg border border-gray-100 shadow-sm flex-grow flow-node-label"
+                                                     style={{ animationDelay: `${idx * 0.1 + 0.1}s` }}>
                                                     <div className={`text-[10px] font-bold mb-1 ${step.color.replace('bg-', 'text-')}`}>{step.stage}</div>
-                                                    <div className="font-bold text-sm text-kenway-navy">{step.label}</div>
-                                                    <div className="text-xs text-gray-500">{step.system}</div>
+                                                    <div className="font-bold text-sm text-kenway-navy leading-tight mb-1">{step.label}</div>
+                                                    <div className="text-xs text-gray-500 leading-tight">{step.system}</div>
                                                 </div>
                                             </div>
                                         );
