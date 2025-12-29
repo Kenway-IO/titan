@@ -1,0 +1,87 @@
+{
+    "T": {
+        "title": "Trigger",
+        "subtitle": "The Pulse of the Enterprise",
+        "description": "The Trigger stage initiates the integration loop. Unlike traditional batch ETL, TITAN prioritizes real-time, event-driven pulses that allow the business to react instantly to changes.",
+        "keyActivities": [
+            "Listening for Business Events (e.g., 'Order Placed')",
+            "Detecting Data Changes (CDC)",
+            "Handling IoT Sensor Signals",
+            "Scheduled Temporal Events (e.g., 'End of Day')"
+        ],
+        "patterns": [
+            { "name": "Webhooks", "desc": "Push-based HTTP callbacks from SaaS apps." },
+            { "name": "Change Data Capture (CDC)", "desc": "Database log mining for zero-impact extraction." },
+            { "name": "Event Sourcing", "desc": "Storing state changes as an immutable sequence of events." }
+        ],
+        "azureTech": ["Azure Event Grid", "Azure Service Bus", "Logic Apps Triggers"]
+    },
+    "I": {
+        "title": "Ingest",
+        "subtitle": "Contextual Awareness",
+        "description": "Raw triggers are rarely enough. The Ingest stage is responsible for 'The Claim Check Pattern'—taking a lightweight ID and hydrating it with the full context needed for decision making.",
+        "keyActivities": [
+            "Fetching Master Data (e.g., Customer Profile)",
+            "Retrieving Transaction History",
+            "Standardizing Data Formats (JSON/Avro)",
+            "Validating Data Quality"
+        ],
+        "patterns": [
+            { "name": "Claim Check", "desc": "Passing a reference ID to keep the message bus light." },
+            { "name": "Enrichment", "desc": "Calling external APIs to append missing data." },
+            { "name": "Normalization", "desc": "Converting proprietary schemas to a Canonical Data Model." }
+        ],
+        "azureTech": ["Azure API Management", "Azure Functions", "Azure Data Factory", "Cosmos DB"]
+    },
+    "T2": {
+        "title": "Think",
+        "subtitle": "The Intelligence Layer",
+        "description": "This is the differentiator. Instead of blindly routing data, TITAN assesses the situation. Is this a standard order? Is it fraud? Does it require VP approval?",
+        "keyActivities": [
+            "Applying Business Rules",
+            "Executing AI/ML Models",
+            "Sentiment Analysis",
+            "Routing Decisions"
+        ],
+        "patterns": [
+            { "name": "Content-Based Routing", "desc": "Directing flow based on payload data." },
+            { "name": "Agentic AI", "desc": "Using LLMs to make unstructured decisions." },
+            { "name": "Complex Event Processing", "desc": "Detecting patterns across multiple events." }
+        ],
+        "azureTech": ["Azure OpenAI", "Azure Stream Analytics", "Drools / Business Rules Engine"]
+    },
+    "A": {
+        "title": "Act",
+        "subtitle": "Deterministic Execution",
+        "description": "The 'Muscle' of the operation. Once a decision is made, the Act stage executes the state change in the target system. Reliability and idempotency are paramount here.",
+        "keyActivities": [
+            "Creating/Updating Records (CRUD)",
+            "Initiating Payments",
+            "Provisioning Resources",
+            "Triggering Downstream Workflows"
+        ],
+        "patterns": [
+            { "name": "Idempotency", "desc": "Ensuring re-running the same action doesn't duplicate results." },
+            { "name": "Saga Pattern", "desc": "Managing long-running distributed transactions." },
+            { "name": "Circuit Breaker", "desc": "Failing fast when downstream systems are down." }
+        ],
+        "azureTech": ["Logic Apps Connectors", "Durable Functions", "Power Automate"]
+    },
+    "N": {
+        "title": "Notify",
+        "subtitle": "Resolution & Feedback",
+        "description": "Closing the loop. Every action generates a receipt. The Notify stage informs stakeholders of success, handles errors, or triggers human-in-the-loop remediation.",
+        "keyActivities": [
+            "Sending User Confirmations",
+            "Updating Dashboards",
+            "Logging Audit Trails",
+            "Alerting Support Teams"
+        ],
+        "patterns": [
+            { "name": "Ack/Nack", "desc": "Acknowledging receipt or signaling failure." },
+            { "name": "Human-in-the-Loop", "desc": "Escalating exceptions for manual review." },
+            { "name": "Dead Letter Queue", "desc": "Parking failed messages for later analysis." }
+        ],
+        "azureTech": ["SendGrid", "Microsoft Teams Adapters", "Azure Monitor", "SignalR"]
+    }
+}
