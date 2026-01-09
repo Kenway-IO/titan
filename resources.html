@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resources | TITAN Framework</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        kenway: {
+                            navy: '#0f2c52',
+                            blue: '#007cc0',
+                            red: '#D32F2F',
+                            gray: '#f4f4f4',
+                            text: '#333333',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        classic: ['Cinzel', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family:Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header Navigation -->
+    <header class="fixed top-0 w-full bg-white border-b border-gray-200 shadow-sm z-50">
+        <nav class="max-w-7xl mx-auto px-8 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <img src="./assets/Kenway IO Lab.jpg" alt="Kenway IO Lab" class="h-12" onerror="this.style.display='none'" />
+                <span class="text-2xl font-classic font-bold text-kenway-navy">TITAN</span>
+            </div>
+
+            <ul class="hidden md:flex items-center gap-8 text-sm font-semibold">
+                <li><a href="index.html" class="text-kenway-navy hover:text-kenway-blue transition-colors">Framework</a></li>
+                <li><a href="resources.html" class="bg-kenway-blue text-white px-6 py-2 rounded-lg">Resources</a></li>
+                <li><a href="case-studies.html" class="text-kenway-navy hover:text-kenway-blue transition-colors">Case Studies</a></li>
+                <li><a href="about.html" class="text-kenway-navy hover:text-kenway-blue transition-colors">About</a></li>
+                <li><a href="contact.html" class="text-kenway-navy hover:text-kenway-blue transition-colors">Contact</a></li>
+            </ul>
+
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden text-kenway-navy" onclick="toggleMobileMenu()">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
+            <ul class="px-8 py-4 space-y-3">
+                <li><a href="index.html" class="block text-kenway-navy hover:text-kenway-blue">Framework</a></li>
+                <li><a href="resources.html" class="block text-kenway-blue font-semibold">Resources</a></li>
+                <li><a href="case-studies.html" class="block text-kenway-navy hover:text-kenway-blue">Case Studies</a></li>
+                <li><a href="about.html" class="block text-kenway-navy hover:text-kenway-blue">About</a></li>
+                <li><a href="contact.html" class="block text-kenway-navy hover:text-kenway-blue">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-24 pb-16">
+        <div class="max-w-7xl mx-auto px-8">
+
+            <!-- Hero Section -->
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-bold text-kenway-navy mb-4 font-classic">Resources & Insights</h1>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Deep-dive guides, templates, and best practices for enterprise integration excellence
+                </p>
+            </div>
+
+            <!-- Layout: Main Content + Sticky Sidebar -->
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+
+                <!-- Main Content Area (3 columns) -->
+                <div class="lg:col-span-3 space-y-16">
+
+                    <!-- Whitepapers & Guides Section -->
+                    <section>
+                        <h2 class="text-3xl font-bold text-kenway-navy mb-6">Whitepapers & Guides</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                            <!-- Resource Card 1: TITAN Implementation Playbook (Gated) -->
+                            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow">
+                                <div class="bg-gradient-to-br from-kenway-navy to-kenway-blue h-32 flex items-center justify-center">
+                                    <svg class="w-16 h-16 text-white opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                    </svg>
+                                </div>
+                                <div class="p-6">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="bg-kenway-red text-white text-xs font-bold px-2 py-1 rounded">PREMIUM</span>
+                                        <span class="text-sm text-gray-500">PDF • 15 pages</span>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-kenway-navy mb-2">TITAN Implementation Playbook</h3>
+                                    <p class="text-gray-600 mb-4">
+                                        Step-by-step guide for deploying TITAN in Dynamics 365, SAP, or Salesforce environments. Includes architecture patterns, technology selection, and phased rollout strategy.
+                                    </p>
+                                    <button onclick="showEmailGate('playbook')" class="w-full bg-kenway-blue text-white px-6 py-3 rounded-lg font-bold hover:bg-kenway-navy transition-colors">
+                                        Download (Email Required)
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Resource Card 2: Integration Patterns Guide (Free) -->
+                            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow">
+                                <div class="bg-gradient-to-br from-blue-500 to-purple-600 h-32 flex items-center justify-center">
+                                    <svg class="w-16 h-16 text-white opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                    </svg>
+                                </div>
+                                <div class="p-6">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="bg-green-500 text-white text-xs font-bold px-2 py-1 rounded">FREE</span>
+                                        <span class="text-sm text-gray-500">PDF • 22 pages</span>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-kenway-navy mb-2">Enterprise Integration Patterns Guide</h3>
+                                    <p class="text-gray-600 mb-4">
+                                        Comprehensive reference for event-driven patterns including CDC, claim check, saga, outbox, and content-based routing with Azure-specific implementations.
+                                    </p>
+                                    <a href="#" onclick="alert('PDF download would start here'); return false;" class="block w-full bg-kenway-blue text-white px-6 py-3 rounded-lg font-bold hover:bg-kenway-navy transition-colors text-center">
+                                        Download Now
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Resource Card 3: ROI Worksheet (Free) -->
+                            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow">
+                                <div class="bg-gradient-to-br from-green-500 to-teal-600 h-32 flex items-center justify-center">
+                                    <svg class="w-16 h-16 text-white opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                                    </svg>
+                                </div>
+                                <div class="p-6">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="bg-green-500 text-white text-xs font-bold px-2 py-1 rounded">FREE</span>
+                                        <span class="text-sm text-gray-500">Excel • Template</span>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-kenway-navy mb-2">ROI Calculation Worksheet</h3>
+                                    <p class="text-gray-600 mb-4">
+                                        Excel template for quantifying TITAN value across capacity, speed, and quality dimensions. Pre-populated with industry benchmarks and conservative assumptions.
+                                    </p>
+                                    <a href="#" onclick="alert('Excel file download would start here'); return false;" class="block w-full bg-kenway-blue text-white px-6 py-3 rounded-lg font-bold hover:bg-kenway-navy transition-colors text-center">
+                                        Download Template
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Resource Card 4: Azure vs AWS Comparison (Gated) -->
+                            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow">
+                                <div class="bg-gradient-to-br from-orange-500 to-red-600 h-32 flex items-center justify-center">
+                                    <svg class="w-16 h-16 text-white opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path>
+                                    </svg>
+                                </div>
+                                <div class="p-6">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="bg-kenway-red text-white text-xs font-bold px-2 py-1 rounded">PREMIUM</span>
+                                        <span class="text-sm text-gray-500">PDF • 18 pages</span>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-kenway-navy mb-2">Azure vs AWS vs SAP BTP: TITAN Deployment</h3>
+                                    <p class="text-gray-600 mb-4">
+                                        Platform comparison guide for TITAN implementation across cloud providers. Covers cost, capabilities, ERP-native integration, and migration considerations.
+                                    </p>
+                                    <button onclick="showEmailGate('cloud-comparison')" class="w-full bg-kenway-blue text-white px-6 py-3 rounded-lg font-bold hover:bg-kenway-navy transition-colors">
+                                        Download (Email Required)
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+
+                    <!-- Video Library Section -->
+                    <section>
+                        <h2 class="text-3xl font-bold text-kenway-navy mb-6">Video Library</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                            <!-- Video Card 1: TITAN Overview -->
+                            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                                <div class="bg-gray-800 h-48 flex items-center justify-center relative group">
+                                    <svg class="w-20 h-20 text-white opacity-80 group-hover:scale-110 transition-transform cursor-pointer" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"></path>
+                                    </svg>
+                                    <div class="absolute top-2 right-2 bg-black/60 text-white text-xs px-2 py-1 rounded">3:42</div>
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="text-xl font-bold text-kenway-navy mb-2">TITAN Framework Overview</h3>
+                                    <p class="text-gray-600 mb-4">
+                                        3-minute introduction to the TITAN methodology, demonstrating how Trigger → Ingest → Think → Act → Notify creates intelligent automation loops.
+                                    </p>
+                                    <button onclick="alert('Video player would open here (YouTube embed)')" class="text-kenway-blue font-semibold hover:underline">
+                                        Watch Video →
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Video Card 2: Use Case Walkthrough -->
+                            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                                <div class="bg-gray-800 h-48 flex items-center justify-center relative group">
+                                    <svg class="w-20 h-20 text-white opacity-80 group-hover:scale-110 transition-transform cursor-pointer" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"></path>
+                                    </svg>
+                                    <div class="absolute top-2 right-2 bg-black/60 text-white text-xs px-2 py-1 rounded">10:15</div>
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="text-xl font-bold text-kenway-navy mb-2">Case Study: Returns Automation</h3>
+                                    <p class="text-gray-600 mb-4">
+                                        Deep-dive walkthrough of the auto-approve returns workflow, showing real Salesforce, Azure OpenAI, and Shopify integrations in action.
+                                    </p>
+                                    <button onclick="alert('Video player would open here (YouTube embed)')" class="text-kenway-blue font-semibold hover:underline">
+                                        Watch Video →
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+
+                    <!-- Blog Posts / Insights Section -->
+                    <section>
+                        <h2 class="text-3xl font-bold text-kenway-navy mb-6">Latest Insights</h2>
+                        <div class="space-y-6">
+
+                            <!-- Blog Post 1 -->
+                            <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-2xl transition-shadow">
+                                <div class="flex items-start gap-4">
+                                    <div class="flex-shrink-0 w-16 h-16 bg-kenway-blue rounded-lg flex items-center justify-center">
+                                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="flex-grow">
+                                        <div class="text-sm text-gray-500 mb-1">Integration Strategy • 8 min read</div>
+                                        <h3 class="text-xl font-bold text-kenway-navy mb-2">Event-Driven vs. Traditional ETL: Why Real-Time Wins</h3>
+                                        <p class="text-gray-600 mb-3">
+                                            Batch ETL worked for decades, but modern businesses demand instant reaction to change. Explore how event-driven architecture delivers competitive advantage through decision velocity.
+                                        </p>
+                                        <a href="#" class="text-kenway-blue font-semibold hover:underline">Read Article →</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Blog Post 2 -->
+                            <div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-2xl transition-shadow">
+                                <div class="flex items-start gap-4">
+                                    <div class="flex-shrink-0 w-16 h-16 bg-purple-600 rounded-lg flex items-center justify-center">
+                                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="flex-grow">
+                                        <div class="text-sm text-gray-500 mb-1">AI & Automation • 6 min read</div>
+                                        <h3 class="text-xl font-bold text-kenway-navy mb-2">5 Signs Your Business Needs TITAN</h3>
+                                        <p class="text-gray-600 mb-3">
+                                            Is manual integration holding you back? Discover the red flags that indicate your organization is ready for event-driven transformation with TITAN.
+                                        </p>
+                                        <a href="#" class="text-kenway-blue font-semibold hover:underline">Read Article →</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+
+                </div>
+
+                <!-- Sticky Sidebar (1 column) -->
+                <aside class="lg:col-span-1">
+                    <div class="sticky top-24 space-y-6">
+
+                        <!-- CTA Card -->
+                        <div class="bg-gradient-to-br from-kenway-navy to-kenway-blue text-white p-6 rounded-xl shadow-2xl">
+                            <svg class="w-12 h-12 mb-4 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            <h3 class="text-xl font-bold mb-2">Need Help?</h3>
+                            <p class="text-cyan-100 mb-4 text-sm">
+                                Schedule a call with our integration architects to discuss your specific challenges
+                            </p>
+                            <a href="contact.html" class="block w-full bg-white text-kenway-navy px-4 py-3 rounded-lg font-bold hover:bg-gray-100 transition-colors text-center">
+                                Book Discovery Call
+                            </a>
+                        </div>
+
+                        <!-- Quick Links Card -->
+                        <div class="bg-white p-6 rounded-xl shadow-lg">
+                            <h3 class="text-lg font-bold text-kenway-navy mb-4">Quick Links</h3>
+                            <ul class="space-y-3 text-sm">
+                                <li>
+                                    <a href="index.html#methodology" class="text-kenway-blue hover:underline flex items-center gap-2">
+                                        <span>→</span> TITAN Methodology
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="index.html#inventory" class="text-kenway-blue hover:underline flex items-center gap-2">
+                                        <span>→</span> Discovery Inventory
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="case-studies.html" class="text-kenway-blue hover:underline flex items-center gap-2">
+                                        <span>→</span> Success Stories
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="about.html" class="text-kenway-blue hover:underline flex items-center gap-2">
+                                        <span>→</span> About Kenway
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </aside>
+
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Email Gate Modal -->
+    <div id="email-gate-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-2xl max-w-md w-full p-8">
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-kenway-blue rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold text-kenway-navy mb-2">Download Premium Content</h3>
+                <p class="text-gray-600">Enter your details to get instant access</p>
+            </div>
+
+            <form id="email-gate-form" onsubmit="handleEmailGateSubmit(event)" class="space-y-4">
+                <input type="hidden" id="resource-id" name="resource_id" value="">
+                <div>
+                    <input
+                        type="email"
+                        name="email"
+                        required
+                        placeholder="Work email"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-kenway-blue focus:border-transparent"
+                    />
+                </div>
+                <div>
+                    <input
+                        type="text"
+                        name="company"
+                        required
+                        placeholder="Company name"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-kenway-blue focus:border-transparent"
+                    />
+                </div>
+                <div class="flex gap-3">
+                    <button
+                        type="button"
+                        onclick="hideEmailGate()"
+                        class="flex-1 bg-gray-200 text-gray-700 px-6 py-3 rounded-lg font-bold hover:bg-gray-300 transition-colors"
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        type="submit"
+                        class="flex-1 bg-kenway-blue text-white px-6 py-3 rounded-lg font-bold hover:bg-kenway-navy transition-colors"
+                    >
+                        Get Access
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-kenway-navy text-white py-12 mt-24">
+        <div class="max-w-7xl mx-auto px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <h4 class="font-bold text-lg mb-4">TITAN Framework</h4>
+                <p class="text-sm text-gray-300">Enterprise integration methodology by Kenway Consulting</p>
+            </div>
+
+            <div>
+                <h4 class="font-semibold mb-4">Learn</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="index.html#methodology" class="text-gray-300 hover:text-white transition-colors">Methodology</a></li>
+                    <li><a href="index.html#inventory" class="text-gray-300 hover:text-white transition-colors">Discovery Inventory</a></li>
+                    <li><a href="resources.html" class="text-gray-300 hover:text-white transition-colors">Resources</a></li>
+                    <li><a href="case-studies.html" class="text-gray-300 hover:text-white transition-colors">Case Studies</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-semibold mb-4">Company</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="about.html" class="text-gray-300 hover:text-white transition-colors">About Kenway</a></li>
+                    <li><a href="https://kenway.com" target="_blank" class="text-gray-300 hover:text-white transition-colors">Kenway.com</a></li>
+                    <li><a href="https://linkedin.com/company/kenway" target="_blank" class="text-gray-300 hover:text-white transition-colors">LinkedIn</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-semibold mb-4">Get Started</h4>
+                <a href="contact.html" class="bg-kenway-blue px-6 py-3 rounded-lg font-bold hover:bg-blue-600 inline-block transition-colors">
+                    Schedule Discovery Call
+                </a>
+                <p class="text-xs text-gray-400 mt-3">Free 30-minute consultation</p>
+            </div>
+        </div>
+
+        <div class="border-t border-gray-700 mt-8 pt-8 text-center text-sm text-gray-400 max-w-7xl mx-auto px-8">
+            &copy; 2025 Kenway Consulting. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Email gate modal
+        function showEmailGate(resourceId) {
+            document.getElementById('resource-id').value = resourceId;
+            document.getElementById('email-gate-modal').classList.remove('hidden');
+        }
+
+        function hideEmailGate() {
+            document.getElementById('email-gate-modal').classList.add('hidden');
+        }
+
+        async function handleEmailGateSubmit(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+
+            const payload = {
+                email: formData.get('email'),
+                company: formData.get('company'),
+                resource_id: formData.get('resource_id'),
+                source: 'resources_page',
+                timestamp: new Date().toISOString()
+            };
+
+            console.log('Email gate submission:', payload);
+
+            // TODO: Send to marketing platform
+            // await fetch('your-webhook-url', { method: 'POST', body: JSON.stringify(payload) });
+
+            hideEmailGate();
+            alert(`Thank you! Your download will start shortly.\n\nResource: ${payload.resource_id}`);
+
+            // In production, trigger actual PDF download here
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('email-gate-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                hideEmailGate();
+            }
+        });
+    </script>
+</body>
+</html>

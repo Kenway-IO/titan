@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | TITAN Framework</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { kenway: { navy: '#0f2c52', blue: '#007cc0', red: '#D32F2F' }}, fontFamily: { classic: ['Cinzel', 'serif'] }}}
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50">
+
+    <header class="fixed top-0 w-full bg-white border-b shadow-sm z-50">
+        <nav class="max-w-7xl mx-auto px-8 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <img src="./assets/Kenway IO Lab.jpg" alt="Kenway IO Lab" class="h-12" onerror="this.style.display='none'" />
+                <span class="text-2xl font-classic font-bold text-kenway-navy">TITAN</span>
+            </div>
+            <ul class="hidden md:flex items-center gap-8 text-sm font-semibold">
+                <li><a href="index.html" class="text-kenway-navy hover:text-kenway-blue">Framework</a></li>
+                <li><a href="resources.html" class="text-kenway-navy hover:text-kenway-blue">Resources</a></li>
+                <li><a href="case-studies.html" class="text-kenway-navy hover:text-kenway-blue">Case Studies</a></li>
+                <li><a href="about.html" class="bg-kenway-blue text-white px-6 py-2 rounded-lg">About</a></li>
+                <li><a href="contact.html" class="text-kenway-navy hover:text-kenway-blue">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="pt-24 pb-16">
+        <div class="max-w-5xl mx-auto px-8">
+
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-bold text-kenway-navy mb-4 font-classic">About TITAN</h1>
+                <p class="text-xl text-gray-600">The methodology behind enterprise integration excellence</p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-12">
+                <h2 class="text-3xl font-bold text-kenway-navy mb-6">Our Mission</h2>
+                <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                    TITAN was developed by <strong>Kenway Consulting's IO Lab</strong> to address a critical gap in enterprise integration: the lack of a standardized, repeatable methodology for designing event-driven workflows that bridge modern SaaS applications, legacy ERP systems, and AI-powered decision engines.
+                </p>
+                <p class="text-lg text-gray-700 leading-relaxed">
+                    Unlike traditional ETL approaches that focus solely on data movement, TITAN emphasizes <strong>decision velocity</strong> – the ability to convert context and intelligence into automated action in real-time. Our framework has been battle-tested across Fortune 500 manufacturing, financial services, retail, and healthcare organizations.
+                </p>
+            </div>
+
+            <div class="bg-gradient-to-br from-kenway-navy to-kenway-blue text-white rounded-xl shadow-lg p-8 mb-12">
+                <h2 class="text-3xl font-bold mb-6">The TITAN Philosophy</h2>
+                <div class="space-y-4 text-lg">
+                    <div class="flex items-start gap-4">
+                        <svg class="w-6 h-6 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                        <div><strong>Event-Driven First:</strong> Business events should trigger immediate reactions, not batch processes.</div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <svg class="w-6 h-6 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <div><strong>Intelligence Embedded:</strong> AI/ML should be a first-class citizen in integration flows, not an afterthought.</div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <svg class="w-6 h-6 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                        </svg>
+                        <div><strong>Controlled Vocabulary:</strong> Standardized naming (T-I-T-A-N) creates common language across business and IT.</div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <svg class="w-6 h-6 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <div><strong>Value-Centric:</strong> Every workflow should quantify impact across capacity, speed, and quality dimensions.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-12">
+                <h2 class="text-3xl font-bold text-kenway-navy mb-6">Technology Partnerships</h2>
+                <p class="text-gray-600 mb-6">TITAN is platform-agnostic but optimized for cloud-native implementations</p>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div class="bg-gray-50 p-6 rounded-lg text-center">
+                        <div class="text-2xl font-bold text-kenway-navy mb-2">Microsoft Azure</div>
+                        <p class="text-xs text-gray-600">Gold Partner</p>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-lg text-center">
+                        <div class="text-2xl font-bold text-kenway-navy mb-2">SAP</div>
+                        <p class="text-xs text-gray-600">Certified Integration</p>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-lg text-center">
+                        <div class="text-2xl font-bold text-kenway-navy mb-2">Salesforce</div>
+                        <p class="text-xs text-gray-600">Partner Network</p>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-lg text-center">
+                        <div class="text-2xl font-bold text-kenway-navy mb-2">Microsoft 365</div>
+                        <p class="text-xs text-gray-600">Dynamics Specialist</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-kenway-blue to-blue-600 text-white rounded-xl shadow-lg p-8 text-center">
+                <h2 class="text-2xl font-bold mb-3">Ready to Transform Your Integration Strategy?</h2>
+                <p class="text-lg mb-6 text-cyan-100">Let's discuss how TITAN can accelerate your digital transformation</p>
+                <a href="contact.html" class="inline-block bg-white text-kenway-navy px-10 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition-colors">
+                    Schedule Discovery Call
+                </a>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="bg-kenway-navy text-white py-12 mt-24">
+        <div class="max-w-7xl mx-auto px-8 text-center">
+            <p class="text-gray-400">&copy; 2025 Kenway Consulting. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

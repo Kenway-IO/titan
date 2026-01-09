@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You | TITAN Framework</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { kenway: { navy: '#0f2c52', blue: '#007cc0', red: '#D32F2F' }}, fontFamily: { classic: ['Cinzel', 'serif'] }}}
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50">
+
+    <header class="fixed top-0 w-full bg-white border-b shadow-sm z-50">
+        <nav class="max-w-7xl mx-auto px-8 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <img src="./assets/Kenway IO Lab.jpg" alt="Kenway IO Lab" class="h-12" onerror="this.style.display='none'" />
+                <span class="text-2xl font-classic font-bold text-kenway-navy">TITAN</span>
+            </div>
+            <ul class="hidden md:flex items-center gap-8 text-sm font-semibold">
+                <li><a href="index.html" class="text-kenway-navy hover:text-kenway-blue">Framework</a></li>
+                <li><a href="resources.html" class="text-kenway-navy hover:text-kenway-blue">Resources</a></li>
+                <li><a href="case-studies.html" class="text-kenway-navy hover:text-kenway-blue">Case Studies</a></li>
+                <li><a href="about.html" class="text-kenway-navy hover:text-kenway-blue">About</a></li>
+                <li><a href="contact.html" class="text-kenway-navy hover:text-kenway-blue">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="pt-32 pb-16">
+        <div class="max-w-3xl mx-auto px-8 text-center">
+
+            <!-- Success Icon -->
+            <div class="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-8">
+                <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+
+            <!-- Dynamic Messaging -->
+            <div id="calendar-confirmation" class="hidden">
+                <h1 class="text-4xl md:text-5xl font-bold text-kenway-navy mb-4">Your Discovery Call is Confirmed!</h1>
+                <p class="text-xl text-gray-600 mb-8">
+                    You should receive a calendar invite within the next 10 minutes with meeting details and Zoom link.
+                </p>
+            </div>
+
+            <div id="form-confirmation" class="hidden">
+                <h1 class="text-4xl md:text-5xl font-bold text-kenway-navy mb-4">Message Received!</h1>
+                <p class="text-xl text-gray-600 mb-8">
+                    Thank you for reaching out. One of our integration architects will respond within 4 business hours.
+                </p>
+            </div>
+
+            <div id="default-confirmation">
+                <h1 class="text-4xl md:text-5xl font-bold text-kenway-navy mb-4">Thank You!</h1>
+                <p class="text-xl text-gray-600 mb-8">
+                    We appreciate your interest in TITAN and will be in touch soon.
+                </p>
+            </div>
+
+            <!-- What Happens Next -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-12 text-left">
+                <h2 class="text-2xl font-bold text-kenway-navy mb-6 text-center">What Happens Next?</h2>
+                <div class="space-y-6">
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 bg-kenway-blue rounded-full flex items-center justify-center text-white font-bold">1</div>
+                        <div>
+                            <h3 class="font-bold text-lg text-kenway-navy mb-1">Preparation</h3>
+                            <p class="text-gray-600">Review your current integration landscape and identify 2-3 high-impact automation opportunities</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 bg-kenway-blue rounded-full flex items-center justify-center text-white font-bold">2</div>
+                        <div>
+                            <h3 class="font-bold text-lg text-kenway-navy mb-1">Discovery Call</h3>
+                            <p class="text-gray-600">30-minute discussion about your systems, challenges, and TITAN use cases relevant to your business</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 bg-kenway-blue rounded-full flex items-center justify-center text-white font-bold">3</div>
+                        <div>
+                            <h3 class="font-bold text-lg text-kenway-navy mb-1">Custom Proposal</h3>
+                            <p class="text-gray-600">We'll provide a TITAN implementation roadmap with ROI projections tailored to your environment</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Explore More -->
+            <div class="bg-gradient-to-br from-kenway-navy to-kenway-blue text-white rounded-xl shadow-lg p-8 mb-12">
+                <h2 class="text-2xl font-bold mb-4">Explore More While You Wait</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <a href="index.html#inventory" class="bg-white/10 hover:bg-white/20 p-4 rounded-lg transition-colors">
+                        <h3 class="font-bold mb-2">Discovery Inventory</h3>
+                        <p class="text-sm text-cyan-100">Browse 14 pre-configured TITAN workflows</p>
+                    </a>
+                    <a href="resources.html" class="bg-white/10 hover:bg-white/20 p-4 rounded-lg transition-colors">
+                        <h3 class="font-bold mb-2">Resources</h3>
+                        <p class="text-sm text-cyan-100">Download guides and templates</p>
+                    </a>
+                    <a href="case-studies.html" class="bg-white/10 hover:bg-white/20 p-4 rounded-lg transition-colors">
+                        <h3 class="font-bold mb-2">Case Studies</h3>
+                        <p class="text-sm text-cyan-100">See TITAN in action</p>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="text-center text-gray-600">
+                <p class="mb-2">Questions before our call?</p>
+                <a href="mailto:titan@kenway.com" class="text-kenway-blue font-semibold hover:underline">titan@kenway.com</a>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="bg-kenway-navy text-white py-12 mt-24">
+        <div class="max-w-7xl mx-auto px-8 text-center">
+            <p class="text-gray-400">&copy; 2025 Kenway Consulting. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Detect which type of confirmation based on URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const type = urlParams.get('type');
+
+        if (type === 'calendar') {
+            document.getElementById('calendar-confirmation').classList.remove('hidden');
+            document.getElementById('default-confirmation').classList.add('hidden');
+        } else if (type === 'form') {
+            document.getElementById('form-confirmation').classList.remove('hidden');
+            document.getElementById('default-confirmation').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>

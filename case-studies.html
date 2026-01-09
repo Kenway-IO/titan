@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Studies | TITAN Framework</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        kenway: { navy: '#0f2c52', blue: '#007cc0', red: '#D32F2F', gray: '#f4f4f4', text: '#333333' }
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'], classic: ['Cinzel', 'serif'] },
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Inter', sans-serif; }</style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header Navigation -->
+    <header class="fixed top-0 w-full bg-white border-b border-gray-200 shadow-sm z-50">
+        <nav class="max-w-7xl mx-auto px-8 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <img src="./assets/Kenway IO Lab.jpg" alt="Kenway IO Lab" class="h-12" onerror="this.style.display='none'" />
+                <span class="text-2xl font-classic font-bold text-kenway-navy">TITAN</span>
+            </div>
+            <ul class="hidden md:flex items-center gap-8 text-sm font-semibold">
+                <li><a href="index.html" class="text-kenway-navy hover:text-kenway-blue">Framework</a></li>
+                <li><a href="resources.html" class="text-kenway-navy hover:text-kenway-blue">Resources</a></li>
+                <li><a href="case-studies.html" class="bg-kenway-blue text-white px-6 py-2 rounded-lg">Case Studies</a></li>
+                <li><a href="about.html" class="text-kenway-navy hover:text-kenway-blue">About</a></li>
+                <li><a href="contact.html" class="text-kenway-navy hover:text-kenway-blue">Contact</a></li>
+            </ul>
+            <button class="md:hidden text-kenway-navy" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-24 pb-16">
+        <div class="max-w-5xl mx-auto px-8">
+
+            <!-- Hero Section -->
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-bold text-kenway-navy mb-4 font-classic">Success Stories</h1>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Real-world TITAN implementations delivering measurable results across industries
+                </p>
+            </div>
+
+            <!-- Case Study 1: Smart Rework Analysis -->
+            <article class="bg-white rounded-xl shadow-lg mb-12 overflow-hidden">
+                <div class="bg-gradient-to-br from-kenway-navy to-kenway-blue p-8 text-white">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="bg-white/20 text-xs font-bold px-3 py-1 rounded-full">MANUFACTURING</span>
+                        <span class="text-cyan-200">•</span>
+                        <span class="text-cyan-200">$450k Annual Savings</span>
+                    </div>
+                    <h2 class="text-3xl font-bold mb-3">Smart Rework Analysis with Computer Vision</h2>
+                    <p class="text-cyan-100 text-lg">
+                        Global manufacturer automates quality control decisions using AI-powered defect classification
+                    </p>
+                </div>
+
+                <div class="p-8 space-y-8">
+                    <!-- Challenge -->
+                    <div>
+                        <h3 class="text-2xl font-bold text-kenway-navy mb-4 flex items-center gap-3">
+                            <svg class="w-8 h-8 text-kenway-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                            </svg>
+                            The Challenge
+                        </h3>
+                        <p class="text-gray-700 leading-relaxed mb-4">
+                            A Fortune 500 automotive parts manufacturer was struggling with inconsistent quality control decisions during production. When defects were detected on the assembly line, human inspectors had to manually assess whether parts could be reworked or should be scrapped. This process was slow, subjective, and caused production delays.
+                        </p>
+                        <p class="text-gray-700 leading-relaxed">
+                            With over 500 defect cases per day across 3 plants, the company faced:
+                        </p>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2 mt-3">
+                            <li>45-minute average decision time per defect (inspectors reviewing photos and specs)</li>
+                            <li>Inconsistent decisions between inspectors (35% variance in rework vs. scrap calls)</li>
+                            <li>Production line stops while waiting for QC approval</li>
+                            <li>Over-scrapping due to conservative decision-making ($1.2M annual waste)</li>
+                        </ul>
+                    </div>
+
+                    <!-- Solution -->
+                    <div>
+                        <h3 class="text-2xl font-bold text-kenway-navy mb-4 flex items-center gap-3">
+                            <svg class="w-8 h-8 text-kenway-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            The TITAN Solution
+                        </h3>
+                        <p class="text-gray-700 leading-relaxed mb-4">
+                            We implemented an end-to-end TITAN workflow that combines SAP integration, Azure AI Vision, and automated decision-making:
+                        </p>
+                        <div class="bg-gray-50 border-l-4 border-kenway-blue p-6 rounded-r-lg">
+                            <div class="space-y-4">
+                                <div class="flex items-start gap-4">
+                                    <div class="flex-shrink-0 w-10 h-10 bg-kenway-navy rounded-full flex items-center justify-center text-white font-bold">T</div>
+                                    <div>
+                                        <div class="font-bold text-kenway-navy">TRIGGER</div>
+                                        <div class="text-sm text-gray-600">Defect logged in SAP S/4HANA by line operator</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-4">
+                                    <div class="flex-shrink-0 w-10 h-10 bg-kenway-blue rounded-full flex items-center justify-center text-white font-bold">I</div>
+                                    <div>
+                                        <div class="font-bold text-kenway-navy">INGEST</div>
+                                        <div class="text-sm text-gray-600">Fetch defect images from Azure Blob Storage + part specifications</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-4">
+                                    <div class="flex-shrink-0 w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold">T</div>
+                                    <div>
+                                        <div class="font-bold text-kenway-navy">THINK</div>
+                                        <div class="text-sm text-gray-600">Azure AI Vision analyzes defect severity + ML model predicts rework feasibility</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-4">
+                                    <div class="flex-shrink-0 w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">A</div>
+                                    <div>
+                                        <div class="font-bold text-kenway-navy">ACT</div>
+                                        <div class="text-sm text-gray-600">Update SAP with "REWORK" or "SCRAP" decision + route part to appropriate queue</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-4">
+                                    <div class="flex-shrink-0 w-10 h-10 bg-green-600 rounded-full flex items-center justify-center text-white font-bold">N</div>
+                                    <div>
+                                        <div class="font-bold text-kenway-navy">NOTIFY</div>
+                                        <div class="text-sm text-gray-600">Alert supervisor via Teams + log decision rationale in Power BI dashboard</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="text-gray-700 mt-4">
+                            <strong>Tech Stack:</strong> SAP S/4HANA, Azure AI Vision, Azure Functions, Logic Apps, Power BI
+                        </p>
+                    </div>
+
+                    <!-- Results -->
+                    <div>
+                        <h3 class="text-2xl font-bold text-kenway-navy mb-4 flex items-center gap-3">
+                            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                            Results
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-lg border-2 border-green-200">
+                                <div class="text-3xl font-bold text-green-700 mb-2">87%</div>
+                                <div class="text-sm font-semibold text-gray-700">Reduction in QC Decision Time</div>
+                                <div class="text-xs text-gray-600 mt-2">From 45 min → 6 min average</div>
+                            </div>
+                            <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-lg border-2 border-blue-200">
+                                <div class="text-3xl font-bold text-blue-700 mb-2">$450k</div>
+                                <div class="text-sm font-semibold text-gray-700">Annual Cost Savings</div>
+                                <div class="text-xs text-gray-600 mt-2">Reduced scrap rate by 35%</div>
+                            </div>
+                            <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-lg border-2 border-purple-200">
+                                <div class="text-3xl font-bold text-purple-700 mb-2">99.2%</div>
+                                <div class="text-sm font-semibold text-gray-700">Decision Accuracy</div>
+                                <div class="text-xs text-gray-600 mt-2">vs. 65% human consistency</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CTA -->
+                    <div class="border-t border-gray-200 pt-8">
+                        <div class="bg-gradient-to-r from-kenway-blue to-blue-600 text-white p-6 rounded-xl text-center">
+                            <p class="text-lg mb-4">Have a similar quality control challenge?</p>
+                            <a href="contact.html" class="inline-block bg-white text-kenway-navy px-8 py-3 rounded-lg font-bold hover:bg-gray-100 transition-colors">
+                                Discuss Your Use Case →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Case Study 2: Invoice Processing (Condensed) -->
+            <article class="bg-white rounded-xl shadow-lg mb-12 p-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="bg-purple-100 text-purple-800 text-xs font-bold px-3 py-1 rounded-full">FINANCIAL SERVICES</span>
+                    <span class="text-gray-400">•</span>
+                    <span class="text-gray-600">$85k Annual Savings</span>
+                </div>
+                <h2 class="text-2xl font-bold text-kenway-navy mb-3">Vendor Invoice Automation with OCR</h2>
+                <p class="text-gray-600 mb-6">Regional bank eliminates manual AP processing using AI document intelligence</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                    <div>
+                        <h4 class="font-bold text-kenway-navy mb-2">Challenge</h4>
+                        <p class="text-sm text-gray-600">Manual 3-way matching of 2,000+ invoices/month taking 15 min each</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-kenway-navy mb-2">Solution</h4>
+                        <p class="text-sm text-gray-600">TITAN workflow with Azure AI Document Intelligence + SAP integration</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-kenway-navy mb-2">Results</h4>
+                        <p class="text-sm text-gray-600">85% time reduction, $85k savings, 99% accuracy</p>
+                    </div>
+                </div>
+
+                <a href="contact.html" class="text-kenway-blue font-semibold hover:underline">Learn more about this implementation →</a>
+            </article>
+
+            <!-- Case Study 3: Returns Automation (Condensed) -->
+            <article class="bg-white rounded-xl shadow-lg mb-12 p-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="bg-orange-100 text-orange-800 text-xs font-bold px-3 py-1 rounded-full">RETAIL / E-COMMERCE</span>
+                    <span class="text-gray-400">•</span>
+                    <span class="text-gray-600">$200k Annual Savings</span>
+                </div>
+                <h2 class="text-2xl font-bold text-kenway-navy mb-3">Auto-Approve Returns with Fraud Detection</h2>
+                <p class="text-gray-600 mb-6">Online retailer automates low-risk return approvals using AI-powered fraud scoring</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                    <div>
+                        <h4 class="font-bold text-kenway-navy mb-2">Challenge</h4>
+                        <p class="text-sm text-gray-600">CSRs spending 8 min per return reviewing customer history</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-kenway-navy mb-2">Solution</h4>
+                        <p class="text-sm text-gray-600">TITAN + Azure OpenAI for fraud scoring + Shopify integration</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-kenway-navy mb-2">Results</h4>
+                        <p class="text-sm text-gray-600">75% auto-approval rate, 2 min avg. time, $200k savings</p>
+                    </div>
+                </div>
+
+                <a href="contact.html" class="text-kenway-blue font-semibold hover:underline">Learn more about this implementation →</a>
+            </article>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-kenway-navy text-white py-12 mt-24">
+        <div class="max-w-7xl mx-auto px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <h4 class="font-bold text-lg mb-4">TITAN Framework</h4>
+                <p class="text-sm text-gray-300">Enterprise integration methodology by Kenway Consulting</p>
+            </div>
+            <div>
+                <h4 class="font-semibold mb-4">Learn</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="index.html#methodology" class="text-gray-300 hover:text-white">Methodology</a></li>
+                    <li><a href="resources.html" class="text-gray-300 hover:text-white">Resources</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-semibold mb-4">Company</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="about.html" class="text-gray-300 hover:text-white">About Kenway</a></li>
+                    <li><a href="https://kenway.com" target="_blank" class="text-gray-300 hover:text-white">Kenway.com</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-semibold mb-4">Get Started</h4>
+                <a href="contact.html" class="bg-kenway-blue px-6 py-3 rounded-lg font-bold hover:bg-blue-600 inline-block">Schedule Discovery Call</a>
+            </div>
+        </div>
+        <div class="border-t border-gray-700 mt-8 pt-8 text-center text-sm text-gray-400">&copy; 2025 Kenway Consulting</div>
+    </footer>
+</body>
+</html>

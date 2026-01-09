@@ -379,6 +379,7 @@
         const MessageSquare = (props) => <Icon {...props}><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></Icon>;
         const AlertTriangle = (props) => <Icon {...props}><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></Icon>;
         const Wifi = (props) => <Icon {...props}><path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></Icon>;
+        const Calendar = (props) => <Icon {...props}><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></Icon>;
 
         // Icon mapping helper since we are loading data from JSON strings
         const IconMap = {
@@ -389,7 +390,8 @@
             CheckCircle: CheckCircle,
             Cloud: Cloud,
             FileText: FileText,
-            Server: Server
+            Server: Server,
+            Calendar: Calendar
         };
 
         // --- Methodology Data for Modals (MOCK FALLBACK) ---
@@ -1564,6 +1566,32 @@
                                     </p>
                                 </div>
 
+                                {/* CTA: Schedule Discovery Call */}
+                                <div className="mt-8 max-w-5xl mx-auto">
+                                    <div className="bg-gradient-to-br from-kenway-blue to-blue-600 text-white p-8 rounded-xl shadow-2xl">
+                                        <div className="flex items-start gap-6">
+                                            <div className="flex-shrink-0 mt-1">
+                                                <Calendar size={48} className="text-white" />
+                                            </div>
+                                            <div className="flex-grow">
+                                                <h3 className="text-2xl font-bold mb-2">See TITAN in Action</h3>
+                                                <p className="text-lg mb-6 text-cyan-50">
+                                                    Schedule a 30-minute discovery call to explore how TITAN solves your integration challenges
+                                                </p>
+                                                <a
+                                                    href="contact.html"
+                                                    className="inline-block bg-white text-kenway-navy px-8 py-3 rounded-lg font-bold hover:bg-gray-100 transition-colors shadow-lg"
+                                                >
+                                                    Schedule Discovery Call
+                                                </a>
+                                                <p className="text-sm mt-3 text-cyan-100 opacity-90">
+                                                    No commitment required • Free consultation
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 {/* Digital Pulse Transition */}
                                 <DigitalPulse />
 
@@ -1708,10 +1736,26 @@
                                     Use the <strong>TITAN Controlled Vocabulary</strong> to build your backlog. Select a row to view the architecture deep-dive.
                                 </p>
                                 <div className="not-prose mt-10">
-                                    <InventoryTable 
+                                    <InventoryTable
                                         data={inventoryData}
-                                        onSelectFlow={handleFlowSelect} 
+                                        onSelectFlow={handleFlowSelect}
                                     />
+                                </div>
+
+                                {/* CTA: Post-Inventory */}
+                                <div className="mt-12">
+                                    <div className="bg-gradient-to-r from-kenway-navy to-kenway-blue text-white p-8 rounded-xl text-center shadow-2xl">
+                                        <h3 className="text-2xl font-bold mb-3">Found a Use Case That Fits Your Needs?</h3>
+                                        <p className="text-lg mb-6 text-cyan-100">
+                                            Let's discuss how to implement it in your environment
+                                        </p>
+                                        <a
+                                            href="contact.html"
+                                            className="inline-block bg-white text-kenway-navy px-10 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition-colors shadow-lg"
+                                        >
+                                            Book Your Discovery Call
+                                        </a>
+                                    </div>
                                 </div>
                             </section>
 
@@ -1723,6 +1767,29 @@
                                 </p>
                                 <div className="not-prose mt-10">
                                     <ROICalc />
+                                </div>
+
+                                {/* CTA: Post-ROI */}
+                                <div className="mt-12">
+                                    <div className="border-4 border-kenway-blue bg-blue-50 p-8 rounded-xl shadow-2xl">
+                                        <div className="flex items-start gap-6">
+                                            <div className="flex-shrink-0 mt-1">
+                                                <Calendar size={64} className="text-kenway-blue" />
+                                            </div>
+                                            <div className="flex-grow">
+                                                <h3 className="text-2xl font-bold text-kenway-navy mb-2">Like What You See?</h3>
+                                                <p className="text-lg mb-6 text-gray-700">
+                                                    Our integration architects can validate these numbers against your actual systems and processes
+                                                </p>
+                                                <a
+                                                    href="contact.html"
+                                                    className="inline-block bg-kenway-blue text-white px-8 py-3 rounded-lg font-bold hover:bg-kenway-navy transition-colors shadow-lg"
+                                                >
+                                                    Schedule Discovery Call →
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </section>
 
