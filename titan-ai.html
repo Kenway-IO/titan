@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TITAN AI | Context Engineering for the Enterprise</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        kenway: {
+                            navy: '#0f2c52',
+                            blue: '#007cc0',
+                            red: '#D32F2F',
+                            gray: '#f4f4f4',
+                            text: '#333333',
+                        },
+                        context: {
+                            gold: '#F59E0B',
+                            amber: '#D97706',
+                            purple: '#8B5CF6',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'pulse-slow': 'pulse 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(30px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+    <!-- Babel -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, #0f2c52 0%, #1e4070 50%, #0f2c52 100%);
+        }
+
+        .context-gradient {
+            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+        }
+
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .file-tree-line {
+            border-left: 2px solid #e5e7eb;
+        }
+
+        .prose p {
+            margin-bottom: 1.25rem;
+            color: #4b5563;
+            line-height: 1.8;
+        }
+
+        .section-fade {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        /* Sidebar styles */
+        .sidebar-link {
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-link.active {
+            background-color: #0f2c52;
+            color: white;
+            border-left: 4px solid #F59E0B;
+        }
+
+        .sidebar-link:hover:not(.active) {
+            background-color: #f3f4f6;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-kenway-text antialiased">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        // --- Icons ---
+        const Icon = ({ children, size = 24, className = "", ...props }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} {...props}>
+                {children}
+            </svg>
+        );
+
+        const Folder = (props) => <Icon {...props}><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></Icon>;
+        const FolderOpen = (props) => <Icon {...props}><path d="m6 14 1.5-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.54 6a2 2 0 0 1-1.95 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H18a2 2 0 0 1 2 2v2"></path></Icon>;
+        const FileText = (props) => <Icon {...props}><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line></Icon>;
+        const Brain = (props) => <Icon {...props}><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z" /><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z" /><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4" /><path d="M12 18v-5" /></Icon>;
+        const User = (props) => <Icon {...props}><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></Icon>;
+        const Users = (props) => <Icon {...props}><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></Icon>;
+        const AlertTriangle = (props) => <Icon {...props}><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></Icon>;
+        const CheckCircle = (props) => <Icon {...props}><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></Icon>;
+        const XCircle = (props) => <Icon {...props}><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></Icon>;
+        const ArrowRight = (props) => <Icon {...props}><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></Icon>;
+        const Zap = (props) => <Icon {...props}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></Icon>;
+        const Database = (props) => <Icon {...props}><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></Icon>;
+        const Lightbulb = (props) => <Icon {...props}><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path></Icon>;
+        const Scale = (props) => <Icon {...props}><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"></path><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"></path><path d="M7 21h10"></path><path d="M12 3v18"></path><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"></path></Icon>;
+        const Eye = (props) => <Icon {...props}><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></Icon>;
+        const BookOpen = (props) => <Icon {...props}><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></Icon>;
+        const MessageSquare = (props) => <Icon {...props}><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></Icon>;
+        const Target = (props) => <Icon {...props}><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></Icon>;
+        const Briefcase = (props) => <Icon {...props}><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></Icon>;
+        const Menu = (props) => <Icon {...props}><line x1="4" y1="12" x2="20" y2="12"></line><line x1="4" y1="6" x2="20" y2="6"></line><line x1="4" y1="18" x2="20" y2="18"></line></Icon>;
+        const X = (props) => <Icon {...props}><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></Icon>;
+        const ChevronRight = (props) => <Icon {...props}><polyline points="9 18 15 12 9 6"></polyline></Icon>;
+        const Luggage = (props) => <Icon {...props}><path d="M6 20h0a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h0"></path><path d="M8 18V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v14"></path><path d="M10 20h4"></path><circle cx="16" cy="20" r="2"></circle><circle cx="8" cy="20" r="2"></circle></Icon>;
+
+        // --- Navigation Data ---
+        const sections = [
+            { id: 'hero', label: 'Introduction' },
+            { id: 'what-is-context', label: 'What Is Context?' },
+            { id: 'directory', label: 'The Directory' },
+            { id: 'plain-english', label: 'Plain English' },
+            { id: 'token-economics', label: 'Token Economics' },
+            { id: 'context-engineer', label: 'Context Engineer' },
+            { id: 'failure-modes', label: 'Failure Modes' },
+            { id: 'titan-relationship', label: 'TITAN + Context' },
+            { id: 'examples', label: 'Examples' },
+            { id: 'readability-test', label: 'The Test' },
+            { id: 'getting-started', label: 'Getting Started' },
+        ];
+
+        // --- Sidebar Component ---
+        const Sidebar = ({ activeSection, isOpen, setIsOpen }) => {
+            return (
+                <>
+                    {/* Mobile menu button */}
+                    <button
+                        onClick={() => setIsOpen(!isOpen)}
+                        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-white rounded-lg shadow-lg"
+                    >
+                        {isOpen ? <X size={24} /> : <Menu size={24} />}
+                    </button>
+
+                    {/* Sidebar */}
+                    <aside className={`fixed top-0 left-0 h-full w-64 bg-white shadow-xl z-40 transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}>
+                        <div className="p-6 border-b">
+                            <a href="index.html" className="text-sm text-kenway-blue hover:underline">← Back to TITAN</a>
+                            <h2 className="text-xl font-bold text-kenway-navy mt-2">TITAN AI</h2>
+                            <p className="text-sm text-gray-500">Context Engineering</p>
+                        </div>
+                        <nav className="p-4">
+                            {sections.map((section) => (
+                                <a
+                                    key={section.id}
+                                    href={`#${section.id}`}
+                                    onClick={() => setIsOpen(false)}
+                                    className={`sidebar-link block px-4 py-2 rounded-lg mb-1 text-sm ${
+                                        activeSection === section.id
+                                            ? 'active'
+                                            : 'text-gray-600'
+                                    }`}
+                                >
+                                    {section.label}
+                                </a>
+                            ))}
+                        </nav>
+                    </aside>
+                </>
+            );
+        };
+
+        // --- Hero Section ---
+        const HeroSection = () => (
+            <section id="hero" className="hero-gradient text-white py-20 lg:py-32">
+                <div className="max-w-4xl mx-auto px-6 text-center">
+                    <div className="inline-flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full mb-8">
+                        <Brain size={20} className="text-context-gold" />
+                        <span className="text-sm font-medium">A TITAN Framework Deep-Dive</span>
+                    </div>
+
+                    <h1 className="text-4xl lg:text-6xl font-bold mb-6">
+                        Context Engineering<br />
+                        <span className="text-context-gold">for the Enterprise</span>
+                    </h1>
+
+                    <p className="text-xl lg:text-2xl text-blue-100 mb-12 max-w-3xl mx-auto leading-relaxed">
+                        What does an AI need to know to do its job well?
+                    </p>
+
+                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 max-w-3xl mx-auto text-left">
+                        <p className="text-lg leading-relaxed mb-4">
+                            <span className="text-context-gold font-semibold">"</span>Imagine hiring someone brilliant but giving them no onboarding. No employee handbook. No access to your systems. No introduction to how your company works.
+                        </p>
+                        <p className="text-lg leading-relaxed mb-4">
+                            Then you hand them a complex task and expect great results.<span className="text-context-gold font-semibold">"</span>
+                        </p>
+                        <p className="text-xl font-semibold text-context-gold">
+                            That's how most companies deploy AI today.
+                        </p>
+                    </div>
+
+                    <p className="mt-8 text-xl">
+                        The difference between a confused AI and a capable one? <span className="font-bold text-context-gold">Context.</span>
+                    </p>
+                </div>
+            </section>
+        );
+
+        // --- What Is Context Section ---
+        const WhatIsContextSection = () => (
+            <section id="what-is-context" className="py-20 bg-white">
+                <div className="max-w-4xl mx-auto px-6">
+                    <h2 className="text-3xl font-bold text-kenway-navy mb-4">What Is Context?</h2>
+                    <p className="text-xl text-gray-600 mb-8">
+                        Everything the AI needs to know <span className="font-semibold">before</span> you ask it to do something.
+                    </p>
+
+                    <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-8 mb-12">
+                        <h3 className="text-xl font-semibold text-kenway-navy mb-6 flex items-center gap-3">
+                            <Briefcase className="text-context-gold" size={28} />
+                            The Briefing Folder Metaphor
+                        </h3>
+                        <p className="text-gray-600 mb-6">
+                            Think of context as a folder you hand to a new consultant on day one:
+                        </p>
+
+                        <div className="grid md:grid-cols-2 gap-4">
+                            {[
+                                { title: 'Instructions', desc: 'What should they do?', icon: FileText },
+                                { title: 'Background', desc: 'What do they need to know about the situation?', icon: BookOpen },
+                                { title: 'Constraints', desc: 'What are they NOT allowed to do?', icon: AlertTriangle },
+                                { title: 'Examples', desc: 'What does "good" look like here?', icon: Target },
+                                { title: 'Resources', desc: 'Where can they look things up?', icon: Database },
+                            ].map((item, idx) => (
+                                <div key={idx} className="flex items-start gap-3 bg-white rounded-lg p-4 shadow-sm">
+                                    <item.icon className="text-context-amber mt-1" size={20} />
+                                    <div>
+                                        <h4 className="font-semibold text-kenway-navy">{item.title}</h4>
+                                        <p className="text-sm text-gray-600">{item.desc}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="text-center bg-kenway-navy text-white rounded-xl p-6">
+                        <p className="text-lg">
+                            <span className="text-context-gold font-semibold">Context is a briefing folder.</span> Write it in plain English so everyone can read it — including the machine.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        );
+
+        // --- Directory Metaphor Section ---
+        const DirectorySection = () => {
+            const files = [
+                { name: 'instructions.md', desc: '"Handle refund requests..."', type: 'file' },
+                { name: 'our-policies.md', desc: '"Refunds allowed within 30 days..."', type: 'file' },
+                { name: 'tone-guide.md', desc: '"Be friendly but professional..."', type: 'file' },
+                { name: 'examples/', desc: '', type: 'folder', children: [
+                    { name: 'good-response.md', desc: '"Here\'s what a great reply looks like"', type: 'file' },
+                    { name: 'bad-response.md', desc: '"Here\'s what to avoid"', type: 'file' },
+                ]},
+            ];
+
+            const FileItem = ({ name, desc, type, depth = 0, children }) => (
+                <div>
+                    <div className={`flex items-center gap-2 py-2 ${depth > 0 ? 'ml-6' : ''}`}>
+                        {type === 'folder' ? (
+                            <FolderOpen className="text-context-gold" size={18} />
+                        ) : (
+                            <FileText className="text-kenway-blue" size={18} />
+                        )}
+                        <span className="font-mono text-sm font-medium text-kenway-navy">{name}</span>
+                        {desc && <span className="text-gray-400 text-sm">→ {desc}</span>}
+                    </div>
+                    {children && children.map((child, idx) => (
+                        <FileItem key={idx} {...child} depth={depth + 1} />
+                    ))}
+                </div>
+            );
+
+            return (
+                <section id="directory" className="py-20 bg-gray-50">
+                    <div className="max-w-4xl mx-auto px-6">
+                        <h2 className="text-3xl font-bold text-kenway-navy mb-4">The Directory Metaphor</h2>
+                        <p className="text-xl text-gray-600 mb-8">
+                            For operators: context is literally a folder of files.
+                        </p>
+
+                        <div className="bg-white rounded-2xl shadow-lg overflow-hidden mb-8">
+                            <div className="bg-gray-100 px-4 py-3 border-b flex items-center gap-2">
+                                <div className="flex gap-1.5">
+                                    <div className="w-3 h-3 rounded-full bg-red-400"></div>
+                                    <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
+                                    <div className="w-3 h-3 rounded-full bg-green-400"></div>
+                                </div>
+                                <span className="text-sm text-gray-600 ml-2 font-mono">/customer-service-agent/</span>
+                            </div>
+                            <div className="p-6">
+                                {files.map((file, idx) => (
+                                    <FileItem key={idx} {...file} />
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="bg-green-50 border border-green-200 rounded-xl p-6">
+                            <div className="flex items-start gap-3">
+                                <CheckCircle className="text-green-600 mt-1" size={24} />
+                                <div>
+                                    <h4 className="font-semibold text-green-800 mb-2">Key Insight</h4>
+                                    <p className="text-green-700">
+                                        Anyone can open these files and read them. Your operations manager. Your compliance team. Your CEO. <span className="font-semibold">No code required.</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        // --- Plain English Section ---
+        const PlainEnglishSection = () => (
+            <section id="plain-english" className="py-20 bg-white">
+                <div className="max-w-5xl mx-auto px-6">
+                    <h2 className="text-3xl font-bold text-kenway-navy mb-4">Why Plain English?</h2>
+                    <p className="text-xl text-gray-600 mb-12">
+                        Write context the way you'd write instructions for a smart new hire.
+                    </p>
+
+                    <div className="grid lg:grid-cols-2 gap-8 mb-12">
+                        {/* Bad Example */}
+                        <div className="bg-red-50 rounded-2xl p-6 border-2 border-red-200">
+                            <div className="flex items-center gap-2 mb-4">
+                                <XCircle className="text-red-500" size={24} />
+                                <h3 className="font-semibold text-red-800">What developers often do</h3>
+                            </div>
+                            <div className="bg-gray-900 rounded-lg p-4 font-mono text-sm text-green-400 overflow-x-auto">
+                                <pre>{`{
+  "customer_tier": "platinum",
+  "ltv": 50000,
+  "churn_risk": 0.73,
+  "max_discount": 25,
+  "escalation": ["mgr", "vp"]
+}`}</pre>
+                            </div>
+                            <p className="mt-4 text-sm text-red-700">
+                                Who can read this? Only developers. What does 0.73 mean? Who's "mgr"?
+                            </p>
+                        </div>
+
+                        {/* Good Example */}
+                        <div className="bg-green-50 rounded-2xl p-6 border-2 border-green-200">
+                            <div className="flex items-center gap-2 mb-4">
+                                <CheckCircle className="text-green-600" size={24} />
+                                <h3 className="font-semibold text-green-800">What everyone can read</h3>
+                            </div>
+                            <div className="bg-white rounded-lg p-4 text-sm text-gray-700 border">
+                                <p className="mb-3"><strong>Customer:</strong> Platinum tier, worth $50,000 to us.</p>
+                                <p className="mb-3"><strong>Risk:</strong> Showing signs they might leave (73% churn probability).</p>
+                                <p><strong>Your authority:</strong> Offer up to 25% off without approval. For more, escalate to Sales Manager, then VP of Sales.</p>
+                            </div>
+                            <p className="mt-4 text-sm text-green-700">
+                                Anyone can read, verify, and improve this. Including the AI.
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Benefits */}
+                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        {[
+                            { icon: Eye, title: 'Anyone can audit it', desc: 'Compliance can verify what the AI "knows"' },
+                            { icon: Users, title: 'Domain experts can improve it', desc: 'Sales can fix sales context without a developer' },
+                            { icon: AlertTriangle, title: 'Mistakes are obvious', desc: '"Wait, our max discount is 20%, not 25%"' },
+                            { icon: Brain, title: 'AI performs better', desc: 'LLMs were trained on natural language, not JSON' },
+                        ].map((benefit, idx) => (
+                            <div key={idx} className="bg-gray-50 rounded-xl p-5 card-hover">
+                                <benefit.icon className="text-kenway-blue mb-3" size={28} />
+                                <h4 className="font-semibold text-kenway-navy mb-2">{benefit.title}</h4>
+                                <p className="text-sm text-gray-600">{benefit.desc}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+        );
+
+        // --- Token Economics Section ---
+        const TokenEconomicsSection = () => (
+            <section id="token-economics" className="py-20 bg-gradient-to-br from-kenway-navy to-blue-900 text-white">
+                <div className="max-w-4xl mx-auto px-6">
+                    <h2 className="text-3xl font-bold mb-4">The Truth, Economically</h2>
+                    <p className="text-xl text-blue-200 mb-8">
+                        AI charges by the word (roughly). More context = more cost.
+                    </p>
+
+                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 mb-12">
+                        <div className="flex items-center gap-4 mb-6">
+                            <Luggage className="text-context-gold" size={40} />
+                            <div>
+                                <h3 className="text-2xl font-bold">The Airline Baggage Rule</h3>
+                                <p className="text-blue-200">Every word has weight. Pack what you need, leave the rest behind.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 className="text-xl font-semibold mb-6">Say what's necessary. Nothing more.</h3>
+
+                    <div className="space-y-4 mb-12">
+                        {[
+                            {
+                                bad: '"The customer is a valued and important customer who has been a loyal customer of our company since the year 2019"',
+                                good: '"Loyal customer since 2019"'
+                            },
+                            {
+                                bad: 'Three paragraphs explaining return policy',
+                                good: 'Bullet points with key rules'
+                            },
+                            {
+                                bad: 'Entire 50-page employee handbook',
+                                good: 'Relevant sections only'
+                            },
+                        ].map((example, idx) => (
+                            <div key={idx} className="grid md:grid-cols-2 gap-4">
+                                <div className="bg-red-900/30 rounded-lg p-4 border border-red-500/30">
+                                    <span className="text-red-300 text-xs font-semibold uppercase">Wasteful</span>
+                                    <p className="text-sm mt-1">{example.bad}</p>
+                                </div>
+                                <div className="bg-green-900/30 rounded-lg p-4 border border-green-500/30">
+                                    <span className="text-green-300 text-xs font-semibold uppercase">Economical</span>
+                                    <p className="text-sm mt-1">{example.good}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="bg-context-gold/20 border border-context-gold/40 rounded-xl p-6">
+                        <Scale className="text-context-gold mb-3" size={28} />
+                        <p className="text-lg">
+                            <span className="font-semibold text-context-gold">The principle:</span> Compress without losing meaning. If removing a sentence doesn't change what the AI knows, remove it.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        );
+
+        // --- Context Engineer Section ---
+        const ContextEngineerSection = () => (
+            <section id="context-engineer" className="py-20 bg-white">
+                <div className="max-w-4xl mx-auto px-6">
+                    <h2 className="text-3xl font-bold text-kenway-navy mb-4">What Is a Context Engineer?</h2>
+                    <p className="text-xl text-gray-600 mb-4">
+                        A new role emerging in enterprises.
+                    </p>
+                    <p className="text-2xl font-semibold text-context-amber mb-12">
+                        Not a developer. Not a prompt writer. A librarian for machines.
+                    </p>
+
+                    <div className="grid md:grid-cols-2 gap-6 mb-12">
+                        {[
+                            { title: 'Decide what the AI needs to know', desc: '"For this task, the agent needs X, Y, Z"' },
+                            { title: 'Write it clearly', desc: 'Turn tribal knowledge into documentation' },
+                            { title: 'Keep it current', desc: 'Make sure context doesn\'t go stale' },
+                            { title: 'Optimize for cost', desc: 'Remove redundancy without losing meaning' },
+                            { title: 'Bridge the gap', desc: 'Connect business experts to AI capabilities' },
+                        ].map((item, idx) => (
+                            <div key={idx} className="flex items-start gap-4 p-5 bg-gray-50 rounded-xl">
+                                <div className="w-8 h-8 bg-context-gold rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+                                    {idx + 1}
+                                </div>
+                                <div>
+                                    <h4 className="font-semibold text-kenway-navy">{item.title}</h4>
+                                    <p className="text-sm text-gray-600">{item.desc}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="bg-kenway-navy text-white rounded-xl p-8">
+                        <h3 className="text-xl font-semibold mb-4 text-context-gold">The Distinction</h3>
+                        <div className="grid md:grid-cols-2 gap-6">
+                            <div className="text-center p-4 bg-white/10 rounded-lg">
+                                <p className="text-sm text-blue-200 mb-2">Prompt Engineering</p>
+                                <p className="text-lg font-semibold">How you ask</p>
+                            </div>
+                            <div className="text-center p-4 bg-context-gold/20 rounded-lg border border-context-gold/40">
+                                <p className="text-sm text-context-gold mb-2">Context Engineering</p>
+                                <p className="text-lg font-semibold">What you provide before you ask</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
+
+        // --- Failure Modes Section ---
+        const FailureModesSection = () => (
+            <section id="failure-modes" className="py-20 bg-gray-50">
+                <div className="max-w-4xl mx-auto px-6">
+                    <h2 className="text-3xl font-bold text-kenway-navy mb-4">The Three Failure Modes</h2>
+                    <p className="text-xl text-gray-600 mb-12">
+                        When AI projects fail, it's usually one of these:
+                    </p>
+
+                    <div className="space-y-6">
+                        {[
+                            {
+                                title: 'Context Starvation',
+                                symptom: '"Why did it give such a generic answer?"',
+                                problem: 'The AI doesn\'t have enough information',
+                                fix: 'Add the background it\'s missing',
+                                color: 'red',
+                                icon: AlertTriangle
+                            },
+                            {
+                                title: 'Context Pollution',
+                                symptom: '"Why is it so slow and expensive?"',
+                                problem: 'The AI has too much irrelevant information',
+                                fix: 'Trim to what\'s actually needed',
+                                color: 'yellow',
+                                icon: Database
+                            },
+                            {
+                                title: 'Context Opacity',
+                                symptom: '"How do we audit this thing?"',
+                                problem: 'No one knows what the AI "knows"',
+                                fix: 'Plain English, version-controlled files',
+                                color: 'purple',
+                                icon: Eye
+                            },
+                        ].map((mode, idx) => (
+                            <div key={idx} className={`bg-white rounded-2xl p-6 shadow-lg border-l-4 ${
+                                mode.color === 'red' ? 'border-red-500' :
+                                mode.color === 'yellow' ? 'border-yellow-500' :
+                                'border-purple-500'
+                            }`}>
+                                <div className="flex items-start gap-4">
+                                    <div className={`p-3 rounded-xl ${
+                                        mode.color === 'red' ? 'bg-red-100' :
+                                        mode.color === 'yellow' ? 'bg-yellow-100' :
+                                        'bg-purple-100'
+                                    }`}>
+                                        <mode.icon className={`${
+                                            mode.color === 'red' ? 'text-red-600' :
+                                            mode.color === 'yellow' ? 'text-yellow-600' :
+                                            'text-purple-600'
+                                        }`} size={28} />
+                                    </div>
+                                    <div className="flex-1">
+                                        <h3 className="text-xl font-bold text-kenway-navy mb-2">{mode.title}</h3>
+                                        <p className="text-gray-500 italic mb-3">{mode.symptom}</p>
+                                        <div className="grid md:grid-cols-2 gap-4">
+                                            <div>
+                                                <span className="text-xs font-semibold text-gray-400 uppercase">Problem</span>
+                                                <p className="text-gray-700">{mode.problem}</p>
+                                            </div>
+                                            <div>
+                                                <span className="text-xs font-semibold text-green-600 uppercase">Fix</span>
+                                                <p className="text-gray-700 font-medium">{mode.fix}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+        );
+
+        // --- TITAN Relationship Section ---
+        const TitanRelationshipSection = () => (
+            <section id="titan-relationship" className="py-20 bg-white">
+                <div className="max-w-5xl mx-auto px-6">
+                    <h2 className="text-3xl font-bold text-kenway-navy mb-4">Where Context Lives in TITAN</h2>
+                    <p className="text-xl text-gray-600 mb-12">
+                        Context Engineering powers the intelligence layer of automation.
+                    </p>
+
+                    {/* TITAN Flow Diagram */}
+                    <div className="bg-gray-50 rounded-2xl p-8 mb-8">
+                        <div className="flex flex-wrap justify-center items-center gap-2 md:gap-4 mb-8">
+                            {[
+                                { letter: 'T', label: 'Trigger', color: 'bg-kenway-navy', highlight: false },
+                                { letter: 'I', label: 'Ingest', color: 'bg-kenway-blue', highlight: true },
+                                { letter: 'T', label: 'Think', color: 'bg-purple-600', highlight: true },
+                                { letter: 'A', label: 'Act', color: 'bg-orange-500', highlight: false },
+                                { letter: 'N', label: 'Notify', color: 'bg-green-600', highlight: false },
+                            ].map((step, idx) => (
+                                <React.Fragment key={idx}>
+                                    <div className={`flex flex-col items-center ${step.highlight ? 'scale-110' : 'opacity-60'}`}>
+                                        <div className={`w-14 h-14 ${step.color} rounded-xl flex items-center justify-center text-white font-bold text-xl ${step.highlight ? 'ring-4 ring-context-gold ring-offset-2' : ''}`}>
+                                            {step.letter}
+                                        </div>
+                                        <span className={`text-xs mt-2 font-medium ${step.highlight ? 'text-kenway-navy' : 'text-gray-400'}`}>{step.label}</span>
+                                    </div>
+                                    {idx < 4 && <ArrowRight className="text-gray-300 hidden md:block" size={20} />}
+                                </React.Fragment>
+                            ))}
+                        </div>
+
+                        <div className="flex justify-center">
+                            <div className="bg-context-gold/20 border-2 border-context-gold rounded-xl px-6 py-3 inline-flex items-center gap-3">
+                                <Lightbulb className="text-context-amber" size={24} />
+                                <span className="font-semibold text-kenway-navy">Context Engineering Zone</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="grid md:grid-cols-2 gap-6">
+                        <div className="bg-kenway-blue/10 rounded-xl p-6 border border-kenway-blue/20">
+                            <h3 className="font-bold text-kenway-navy mb-3 flex items-center gap-2">
+                                <Database className="text-kenway-blue" size={20} />
+                                INGEST
+                            </h3>
+                            <p className="text-gray-600">
+                                <span className="font-semibold">Building the context.</span> Gathering the information from various sources, normalizing it, assembling the briefing folder.
+                            </p>
+                        </div>
+                        <div className="bg-purple-50 rounded-xl p-6 border border-purple-200">
+                            <h3 className="font-bold text-kenway-navy mb-3 flex items-center gap-2">
+                                <Brain className="text-purple-600" size={20} />
+                                THINK
+                            </h3>
+                            <p className="text-gray-600">
+                                <span className="font-semibold">Using the context.</span> The AI reads the briefing, applies reasoning, and makes decisions based on what it knows.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
+
+        // --- Examples Section ---
+        const ExamplesSection = () => (
+            <section id="examples" className="py-20 bg-gray-50">
+                <div className="max-w-4xl mx-auto px-6">
+                    <h2 className="text-3xl font-bold text-kenway-navy mb-4">Simple Examples</h2>
+                    <p className="text-xl text-gray-600 mb-12">
+                        The difference context makes.
+                    </p>
+
+                    <div className="space-y-8">
+                        {/* Example A */}
+                        <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+                            <div className="bg-kenway-navy text-white px-6 py-4">
+                                <h3 className="font-semibold">Example A: Customer Service Bot</h3>
+                            </div>
+                            <div className="p-6">
+                                <div className="grid md:grid-cols-2 gap-6">
+                                    <div>
+                                        <span className="text-xs font-semibold text-red-600 uppercase">Without good context</span>
+                                        <div className="mt-2 bg-gray-100 rounded-lg p-4">
+                                            <MessageSquare className="text-gray-400 mb-2" size={20} />
+                                            <p className="text-gray-600 italic">"Hello! How can I help you today?"</p>
+                                        </div>
+                                        <p className="text-sm text-gray-500 mt-2">Generic, unhelpful</p>
+                                    </div>
+                                    <div>
+                                        <span className="text-xs font-semibold text-green-600 uppercase">With good context</span>
+                                        <div className="mt-2 bg-green-50 rounded-lg p-4 border border-green-200">
+                                            <MessageSquare className="text-green-600 mb-2" size={20} />
+                                            <p className="text-gray-700">"Hi Sarah, I see you placed order #4521 last week and it's currently in transit. Are you checking on that, or is there something else I can help with?"</p>
+                                        </div>
+                                        <p className="text-sm text-green-600 mt-2 font-medium">Knew who Sarah is + her recent activity</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Example B */}
+                        <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+                            <div className="bg-kenway-navy text-white px-6 py-4">
+                                <h3 className="font-semibold">Example B: Sales Assistant</h3>
+                            </div>
+                            <div className="p-6">
+                                <div className="grid md:grid-cols-2 gap-6">
+                                    <div>
+                                        <span className="text-xs font-semibold text-red-600 uppercase">Without context</span>
+                                        <div className="mt-2 bg-gray-100 rounded-lg p-4">
+                                            <MessageSquare className="text-gray-400 mb-2" size={20} />
+                                            <p className="text-gray-600 italic">"Here's information about our product..."</p>
+                                        </div>
+                                        <p className="text-sm text-gray-500 mt-2">One-size-fits-all pitch</p>
+                                    </div>
+                                    <div>
+                                        <span className="text-xs font-semibold text-green-600 uppercase">With context</span>
+                                        <div className="mt-2 bg-green-50 rounded-lg p-4 border border-green-200">
+                                            <MessageSquare className="text-green-600 mb-2" size={20} />
+                                            <p className="text-gray-700">"Given that Acme Corp is in manufacturing and mentioned supply chain issues in your last call, I'd emphasize our inventory integration features. Their competitor Beta Inc just renewed with us — that's a good reference."</p>
+                                        </div>
+                                        <p className="text-sm text-green-600 mt-2 font-medium">Knew industry, pain points, call history, competitive landscape</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
+
+        // --- Readability Test Section ---
+        const ReadabilityTestSection = () => (
+            <section id="readability-test" className="py-20 bg-white">
+                <div className="max-w-4xl mx-auto px-6">
+                    <h2 className="text-3xl font-bold text-kenway-navy mb-4">The Readability Test</h2>
+                    <p className="text-xl text-gray-600 mb-8">
+                        A simple rule for executives.
+                    </p>
+
+                    <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-8 mb-12 border-2 border-context-gold">
+                        <p className="text-2xl text-kenway-navy text-center font-medium leading-relaxed">
+                            "If your compliance officer can't read and understand what the AI knows, <span className="text-context-amber font-bold">you have a problem.</span>"
+                        </p>
+                    </div>
+
+                    <h3 className="text-xl font-semibold text-kenway-navy mb-6">The Test:</h3>
+
+                    <div className="space-y-4">
+                        {[
+                            { step: 1, text: 'Print out your AI\'s context files' },
+                            { step: 2, text: 'Hand them to a non-technical colleague' },
+                            { step: 3, text: 'Ask: "Can you tell me what this AI is supposed to do and what it knows?"' },
+                        ].map((item) => (
+                            <div key={item.step} className="flex items-center gap-4 bg-gray-50 rounded-xl p-5">
+                                <div className="w-10 h-10 bg-kenway-navy rounded-full flex items-center justify-center text-white font-bold flex-shrink-0">
+                                    {item.step}
+                                </div>
+                                <p className="text-gray-700 text-lg">{item.text}</p>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="mt-8 bg-kenway-navy text-white rounded-xl p-6 text-center">
+                        <p className="text-lg">
+                            If they can't answer? <span className="text-context-gold font-semibold">Rewrite it in plainer English.</span>
+                        </p>
+                    </div>
+                </div>
+            </section>
+        );
+
+        // --- Getting Started Section ---
+        const GettingStartedSection = () => (
+            <section id="getting-started" className="py-20 bg-gradient-to-br from-kenway-navy to-blue-900 text-white">
+                <div className="max-w-4xl mx-auto px-6">
+                    <h2 className="text-3xl font-bold mb-4">Getting Started</h2>
+                    <p className="text-xl text-blue-200 mb-12">
+                        Three questions to ask about any AI project.
+                    </p>
+
+                    <div className="space-y-6 mb-12">
+                        {[
+                            {
+                                num: 1,
+                                question: 'What does the AI need to know?',
+                                guidance: 'List it out. Be specific.'
+                            },
+                            {
+                                num: 2,
+                                question: 'Where does that information live today?',
+                                guidance: 'In someone\'s head? In a document? In a database?'
+                            },
+                            {
+                                num: 3,
+                                question: 'Can we write it in plain English?',
+                                guidance: 'If yes, do it. If no, ask why not.'
+                            },
+                        ].map((item) => (
+                            <div key={item.num} className="bg-white/10 backdrop-blur-sm rounded-xl p-6">
+                                <div className="flex items-start gap-4">
+                                    <div className="w-12 h-12 bg-context-gold rounded-xl flex items-center justify-center text-kenway-navy font-bold text-xl flex-shrink-0">
+                                        {item.num}
+                                    </div>
+                                    <div>
+                                        <h3 className="text-xl font-semibold mb-2">{item.question}</h3>
+                                        <p className="text-blue-200">{item.guidance}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="bg-context-gold rounded-2xl p-8 text-kenway-navy text-center">
+                        <h3 className="text-2xl font-bold mb-4">Your AI is only as good as what it knows.</h3>
+                        <p className="text-lg mb-6">
+                            Let's look at what your agents need to know — and make sure they know it.
+                        </p>
+                        <a href="index.html" className="inline-flex items-center gap-2 bg-kenway-navy text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-900 transition-colors">
+                            Explore TITAN Framework
+                            <ArrowRight size={20} />
+                        </a>
+                    </div>
+                </div>
+            </section>
+        );
+
+        // --- Footer ---
+        const Footer = () => (
+            <footer className="bg-gray-900 text-gray-400 py-12">
+                <div className="max-w-4xl mx-auto px-6 text-center">
+                    <p className="mb-4">
+                        <span className="text-white font-semibold">TITAN AI</span> — Context Engineering for the Enterprise
+                    </p>
+                    <p className="text-sm">
+                        Part of the <a href="index.html" className="text-kenway-blue hover:underline">TITAN Framework</a> by Kenway Consulting
+                    </p>
+                </div>
+            </footer>
+        );
+
+        // --- Main App ---
+        const App = () => {
+            const [activeSection, setActiveSection] = useState('hero');
+            const [sidebarOpen, setSidebarOpen] = useState(false);
+
+            // Scroll spy
+            useEffect(() => {
+                const observer = new IntersectionObserver(
+                    (entries) => {
+                        entries.forEach((entry) => {
+                            if (entry.isIntersecting) {
+                                setActiveSection(entry.target.id);
+                            }
+                        });
+                    },
+                    { rootMargin: '-20% 0px -70% 0px' }
+                );
+
+                sections.forEach((section) => {
+                    const el = document.getElementById(section.id);
+                    if (el) observer.observe(el);
+                });
+
+                return () => observer.disconnect();
+            }, []);
+
+            return (
+                <div className="min-h-screen">
+                    <Sidebar
+                        activeSection={activeSection}
+                        isOpen={sidebarOpen}
+                        setIsOpen={setSidebarOpen}
+                    />
+
+                    {/* Overlay for mobile */}
+                    {sidebarOpen && (
+                        <div
+                            className="fixed inset-0 bg-black/50 z-30 lg:hidden"
+                            onClick={() => setSidebarOpen(false)}
+                        />
+                    )}
+
+                    <main className="lg:ml-64">
+                        <HeroSection />
+                        <WhatIsContextSection />
+                        <DirectorySection />
+                        <PlainEnglishSection />
+                        <TokenEconomicsSection />
+                        <ContextEngineerSection />
+                        <FailureModesSection />
+                        <TitanRelationshipSection />
+                        <ExamplesSection />
+                        <ReadabilityTestSection />
+                        <GettingStartedSection />
+                        <Footer />
+                    </main>
+                </div>
+            );
+        };
+
+        // Render
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
