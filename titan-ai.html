@@ -20,13 +20,14 @@
                             text: '#333333',
                         },
                         context: {
-                            gold: '#F59E0B',
-                            amber: '#D97706',
+                            gold: '#007cc0',
+                            amber: '#007cc0',
                             purple: '#8B5CF6',
                         }
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
+                        classic: ['Cinzel', 'serif'],
                     },
                     animation: {
                         'fade-in': 'fadeIn 0.5s ease-out',
@@ -56,17 +57,17 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         body { font-family: 'Inter', sans-serif; }
 
         .hero-gradient {
-            background: linear-gradient(135deg, #0f2c52 0%, #1e4070 50%, #0f2c52 100%);
+            background: linear-gradient(135deg, #0f2c52 0%, #1e4070 100%);
         }
 
         .context-gradient {
-            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+            background: linear-gradient(135deg, #007cc0 0%, #0f2c52 100%);
         }
 
         .card-hover {
@@ -100,11 +101,14 @@
         .sidebar-link.active {
             background-color: #0f2c52;
             color: white;
-            border-left: 4px solid #F59E0B;
+            border-left: 4px solid #007cc0;
         }
 
-        .sidebar-link:hover:not(.active) {
-            background-color: #f3f4f6;
+        /* Text gradient for branding */
+        .text-gradient-red {
+            background: linear-gradient(90deg, #D32F2F 0%, #FFFFFF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
     </style>
 </head>
@@ -173,28 +177,52 @@
                     </button>
 
                     {/* Sidebar */}
-                    <aside className={`fixed top-0 left-0 h-full w-64 bg-white shadow-xl z-40 transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}>
-                        <div className="p-6 border-b">
-                            <a href="index.html" className="text-sm text-kenway-blue hover:underline">← Back to TITAN</a>
-                            <h2 className="text-xl font-bold text-kenway-navy mt-2">TITAN AI</h2>
-                            <p className="text-sm text-gray-500">Context Engineering</p>
+                    <aside className={`fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 shadow-lg transform transition-transform duration-200 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}>
+                        {/* Navy Header */}
+                        <div className="flex items-center justify-between h-20 px-6 bg-kenway-navy text-white">
+                            <div className="flex flex-col">
+                                <span className="text-2xl font-classic font-semibold tracking-tight">TITAN <span className="text-kenway-blue">AI</span></span>
+                                <span className="text-xs text-blue-300 font-medium tracking-wider">CONTEXT ENGINEERING</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <img src="./assets/Kenway IO Lab.jpg" alt="IO Lab" className="h-12 w-auto rounded bg-white/10 border border-transparent hover:border-white/30 transition" onError={(e) => {e.target.style.display='none'}} />
+                                <button onClick={() => setIsOpen(false)} className="lg:hidden text-white opacity-80 hover:opacity-100">
+                                    <X size={24} />
+                                </button>
+                            </div>
                         </div>
-                        <nav className="p-4">
+
+                        {/* Back to TITAN link */}
+                        <div className="px-6 py-3 border-b border-gray-100 bg-gray-50">
+                            <a href="index.html" className="text-sm text-kenway-blue hover:underline flex items-center gap-2">
+                                <ChevronRight size={16} className="rotate-180" />
+                                Back to TITAN Framework
+                            </a>
+                        </div>
+
+                        {/* Navigation */}
+                        <nav className="p-4 space-y-1 overflow-y-auto" style={{maxHeight: 'calc(100vh - 280px)'}}>
                             {sections.map((section) => (
                                 <a
                                     key={section.id}
                                     href={`#${section.id}`}
                                     onClick={() => setIsOpen(false)}
-                                    className={`sidebar-link block px-4 py-2 rounded-lg mb-1 text-sm ${
+                                    className={`flex items-center w-full px-4 py-2.5 text-sm font-semibold transition-all rounded-r-full sidebar-link ${
                                         activeSection === section.id
-                                            ? 'active'
-                                            : 'text-gray-600'
+                                            ? 'active shadow-sm'
+                                            : 'text-gray-600 hover:bg-gray-100 hover:text-kenway-navy'
                                     }`}
                                 >
                                     {section.label}
                                 </a>
                             ))}
                         </nav>
+
+                        {/* Footer */}
+                        <div className="absolute bottom-0 w-full p-6 border-t border-gray-100 bg-gray-50">
+                            <p className="text-xs text-gray-500 font-medium">© 2026 Strategy & Architecture</p>
+                            <p className="text-[10px] text-gray-400 mt-1 uppercase tracking-wider">Internal Confidential</p>
+                        </div>
                     </aside>
                 </>
             );
@@ -205,13 +233,13 @@
             <section id="hero" className="hero-gradient text-white py-20 lg:py-32">
                 <div className="max-w-4xl mx-auto px-6 text-center">
                     <div className="inline-flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full mb-8">
-                        <Brain size={20} className="text-context-gold" />
+                        <Brain size={20} className="text-kenway-blue" />
                         <span className="text-sm font-medium">A TITAN Framework Deep-Dive</span>
                     </div>
 
                     <h1 className="text-4xl lg:text-6xl font-bold mb-6">
                         Context Engineering<br />
-                        <span className="text-context-gold">for the Enterprise</span>
+                        <span className="text-blue-300">for the Enterprise</span>
                     </h1>
 
                     <p className="text-xl lg:text-2xl text-blue-100 mb-12 max-w-3xl mx-auto leading-relaxed">
@@ -220,18 +248,18 @@
 
                     <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 max-w-3xl mx-auto text-left">
                         <p className="text-lg leading-relaxed mb-4">
-                            <span className="text-context-gold font-semibold">"</span>Imagine hiring someone brilliant but giving them no onboarding. No employee handbook. No access to your systems. No introduction to how your company works.
+                            <span className="text-blue-300 font-semibold">"</span>Imagine hiring someone brilliant but giving them no onboarding. No employee handbook. No access to your systems. No introduction to how your company works.
                         </p>
                         <p className="text-lg leading-relaxed mb-4">
-                            Then you hand them a complex task and expect great results.<span className="text-context-gold font-semibold">"</span>
+                            Then you hand them a complex task and expect great results.<span className="text-blue-300 font-semibold">"</span>
                         </p>
-                        <p className="text-xl font-semibold text-context-gold">
+                        <p className="text-xl font-semibold text-blue-300">
                             That's how most companies deploy AI today.
                         </p>
                     </div>
 
                     <p className="mt-8 text-xl">
-                        The difference between a confused AI and a capable one? <span className="font-bold text-context-gold">Context.</span>
+                        The difference between a confused AI and a capable one? <span className="font-bold text-blue-300">Context.</span>
                     </p>
                 </div>
             </section>
@@ -246,9 +274,9 @@
                         Everything the AI needs to know <span className="font-semibold">before</span> you ask it to do something.
                     </p>
 
-                    <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-8 mb-12">
+                    <div className="bg-gradient-to-br from-blue-50 to-sky-50 rounded-2xl p-8 mb-12">
                         <h3 className="text-xl font-semibold text-kenway-navy mb-6 flex items-center gap-3">
-                            <Briefcase className="text-context-gold" size={28} />
+                            <Briefcase className="text-kenway-blue" size={28} />
                             The Briefing Folder Metaphor
                         </h3>
                         <p className="text-gray-600 mb-6">
@@ -264,7 +292,7 @@
                                 { title: 'Resources', desc: 'Where can they look things up?', icon: Database },
                             ].map((item, idx) => (
                                 <div key={idx} className="flex items-start gap-3 bg-white rounded-lg p-4 shadow-sm">
-                                    <item.icon className="text-context-amber mt-1" size={20} />
+                                    <item.icon className="text-kenway-blue mt-1" size={20} />
                                     <div>
                                         <h4 className="font-semibold text-kenway-navy">{item.title}</h4>
                                         <p className="text-sm text-gray-600">{item.desc}</p>
@@ -276,7 +304,7 @@
 
                     <div className="text-center bg-kenway-navy text-white rounded-xl p-6">
                         <p className="text-lg">
-                            <span className="text-context-gold font-semibold">Context is a briefing folder.</span> Write it in plain English so everyone can read it — including the machine.
+                            <span className="text-kenway-blue font-semibold">Context is a briefing folder.</span> Write it in plain English so everyone can read it — including the machine.
                         </p>
                     </div>
                 </div>
@@ -299,7 +327,7 @@
                 <div>
                     <div className={`flex items-center gap-2 py-2 ${depth > 0 ? 'ml-6' : ''}`}>
                         {type === 'folder' ? (
-                            <FolderOpen className="text-context-gold" size={18} />
+                            <FolderOpen className="text-kenway-blue" size={18} />
                         ) : (
                             <FileText className="text-kenway-blue" size={18} />
                         )}
@@ -429,7 +457,7 @@
 
                     <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 mb-12">
                         <div className="flex items-center gap-4 mb-6">
-                            <Luggage className="text-context-gold" size={40} />
+                            <Luggage className="text-blue-300" size={40} />
                             <div>
                                 <h3 className="text-2xl font-bold">The Airline Baggage Rule</h3>
                                 <p className="text-blue-200">Every word has weight. Pack what you need, leave the rest behind.</p>
@@ -467,10 +495,10 @@
                         ))}
                     </div>
 
-                    <div className="bg-context-gold/20 border border-context-gold/40 rounded-xl p-6">
-                        <Scale className="text-context-gold mb-3" size={28} />
+                    <div className="bg-kenway-blue/20 border border-kenway-blue/40 rounded-xl p-6">
+                        <Scale className="text-kenway-blue mb-3" size={28} />
                         <p className="text-lg">
-                            <span className="font-semibold text-context-gold">The principle:</span> Compress without losing meaning. If removing a sentence doesn't change what the AI knows, remove it.
+                            <span className="font-semibold text-kenway-blue">The principle:</span> Compress without losing meaning. If removing a sentence doesn't change what the AI knows, remove it.
                         </p>
                     </div>
                 </div>
@@ -480,44 +508,52 @@
         // --- Context Engineer Section ---
         const ContextEngineerSection = () => (
             <section id="context-engineer" className="py-20 bg-white">
-                <div className="max-w-4xl mx-auto px-6">
+                <div className="max-w-6xl mx-auto px-6">
                     <h2 className="text-3xl font-bold text-kenway-navy mb-4">What Is a Context Engineer?</h2>
                     <p className="text-xl text-gray-600 mb-4">
                         A new role emerging in enterprises.
                     </p>
-                    <p className="text-2xl font-semibold text-context-amber mb-12">
+                    <p className="text-2xl font-semibold text-kenway-blue mb-12">
                         Not a developer. Not a prompt writer. A librarian for machines.
                     </p>
 
-                    <div className="grid md:grid-cols-2 gap-6 mb-12">
-                        {[
-                            { title: 'Decide what the AI needs to know', desc: '"For this task, the agent needs X, Y, Z"' },
-                            { title: 'Write it clearly', desc: 'Turn tribal knowledge into documentation' },
-                            { title: 'Keep it current', desc: 'Make sure context doesn\'t go stale' },
-                            { title: 'Optimize for cost', desc: 'Remove redundancy without losing meaning' },
-                            { title: 'Bridge the gap', desc: 'Connect business experts to AI capabilities' },
-                        ].map((item, idx) => (
-                            <div key={idx} className="flex items-start gap-4 p-5 bg-gray-50 rounded-xl">
-                                <div className="w-8 h-8 bg-context-gold rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
-                                    {idx + 1}
-                                </div>
-                                <div>
-                                    <h4 className="font-semibold text-kenway-navy">{item.title}</h4>
-                                    <p className="text-sm text-gray-600">{item.desc}</p>
-                                </div>
-                            </div>
-                        ))}
+                    {/* Horizontal Step Flow */}
+                    <div className="mb-12 overflow-x-auto">
+                        <div className="flex items-start justify-between min-w-[800px] gap-4">
+                            {[
+                                { title: 'Decide', desc: 'What the AI needs to know' },
+                                { title: 'Write', desc: 'Turn tribal knowledge into docs' },
+                                { title: 'Maintain', desc: 'Keep context current' },
+                                { title: 'Optimize', desc: 'Remove redundancy, cut cost' },
+                                { title: 'Bridge', desc: 'Connect experts to AI' },
+                            ].map((item, idx) => (
+                                <React.Fragment key={idx}>
+                                    <div className="flex flex-col items-center text-center flex-1">
+                                        <div className="w-12 h-12 bg-kenway-blue rounded-full flex items-center justify-center text-white font-bold text-lg mb-3 shadow-lg">
+                                            {idx + 1}
+                                        </div>
+                                        <h4 className="font-bold text-kenway-navy text-sm mb-1">{item.title}</h4>
+                                        <p className="text-xs text-gray-500 leading-tight">{item.desc}</p>
+                                    </div>
+                                    {idx < 4 && (
+                                        <div className="flex items-center pt-5">
+                                            <ArrowRight className="text-gray-300" size={24} />
+                                        </div>
+                                    )}
+                                </React.Fragment>
+                            ))}
+                        </div>
                     </div>
 
                     <div className="bg-kenway-navy text-white rounded-xl p-8">
-                        <h3 className="text-xl font-semibold mb-4 text-context-gold">The Distinction</h3>
+                        <h3 className="text-xl font-semibold mb-4 text-kenway-blue">The Distinction</h3>
                         <div className="grid md:grid-cols-2 gap-6">
                             <div className="text-center p-4 bg-white/10 rounded-lg">
                                 <p className="text-sm text-blue-200 mb-2">Prompt Engineering</p>
                                 <p className="text-lg font-semibold">How you ask</p>
                             </div>
-                            <div className="text-center p-4 bg-context-gold/20 rounded-lg border border-context-gold/40">
-                                <p className="text-sm text-context-gold mb-2">Context Engineering</p>
+                            <div className="text-center p-4 bg-kenway-blue/20 rounded-lg border border-kenway-blue/40">
+                                <p className="text-sm text-kenway-blue mb-2">Context Engineering</p>
                                 <p className="text-lg font-semibold">What you provide before you ask</p>
                             </div>
                         </div>
@@ -614,18 +650,23 @@
                     <div className="bg-gray-50 rounded-2xl p-8 mb-8">
                         <div className="flex flex-wrap justify-center items-center gap-2 md:gap-4 mb-8">
                             {[
-                                { letter: 'T', label: 'Trigger', color: 'bg-kenway-navy', highlight: false },
-                                { letter: 'I', label: 'Ingest', color: 'bg-kenway-blue', highlight: true },
-                                { letter: 'T', label: 'Think', color: 'bg-purple-600', highlight: true },
-                                { letter: 'A', label: 'Act', color: 'bg-orange-500', highlight: false },
-                                { letter: 'N', label: 'Notify', color: 'bg-green-600', highlight: false },
+                                { img: 't.png', label: 'Trigger', highlight: false },
+                                { img: 'i.png', label: 'Ingest', highlight: true },
+                                { img: 't.png', label: 'Think', highlight: true },
+                                { img: 'a.png', label: 'Act', highlight: false },
+                                { img: 'n.png', label: 'Notify', highlight: false },
                             ].map((step, idx) => (
                                 <React.Fragment key={idx}>
-                                    <div className={`flex flex-col items-center ${step.highlight ? 'scale-110' : 'opacity-60'}`}>
-                                        <div className={`w-14 h-14 ${step.color} rounded-xl flex items-center justify-center text-white font-bold text-xl ${step.highlight ? 'ring-4 ring-context-gold ring-offset-2' : ''}`}>
-                                            {step.letter}
+                                    <div className={`flex flex-col items-center ${step.highlight ? 'scale-110' : 'opacity-50'}`}>
+                                        <div className={`w-16 h-16 flex items-center justify-center ${step.highlight ? 'ring-4 ring-kenway-blue ring-offset-2 rounded-xl bg-white' : ''}`}>
+                                            <img
+                                                src={`./assets/titanLetters/${step.img}`}
+                                                alt={step.label}
+                                                className="h-14 w-auto"
+                                                onError={(e) => {e.target.style.display='none'}}
+                                            />
                                         </div>
-                                        <span className={`text-xs mt-2 font-medium ${step.highlight ? 'text-kenway-navy' : 'text-gray-400'}`}>{step.label}</span>
+                                        <span className={`text-xs mt-2 font-medium ${step.highlight ? 'text-kenway-navy font-bold' : 'text-gray-400'}`}>{step.label}</span>
                                     </div>
                                     {idx < 4 && <ArrowRight className="text-gray-300 hidden md:block" size={20} />}
                                 </React.Fragment>
@@ -633,8 +674,8 @@
                         </div>
 
                         <div className="flex justify-center">
-                            <div className="bg-context-gold/20 border-2 border-context-gold rounded-xl px-6 py-3 inline-flex items-center gap-3">
-                                <Lightbulb className="text-context-amber" size={24} />
+                            <div className="bg-kenway-blue/20 border-2 border-kenway-blue rounded-xl px-6 py-3 inline-flex items-center gap-3">
+                                <Lightbulb className="text-kenway-blue" size={24} />
                                 <span className="font-semibold text-kenway-navy">Context Engineering Zone</span>
                             </div>
                         </div>
@@ -741,9 +782,9 @@
                         A simple rule for executives.
                     </p>
 
-                    <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-8 mb-12 border-2 border-context-gold">
+                    <div className="bg-gradient-to-br from-blue-50 to-sky-50 rounded-2xl p-8 mb-12 border-2 border-kenway-blue">
                         <p className="text-2xl text-kenway-navy text-center font-medium leading-relaxed">
-                            "If your compliance officer can't read and understand what the AI knows, <span className="text-context-amber font-bold">you have a problem.</span>"
+                            "If your compliance officer can't read and understand what the AI knows, <span className="text-kenway-red font-bold">you have a problem.</span>"
                         </p>
                     </div>
 
@@ -766,7 +807,7 @@
 
                     <div className="mt-8 bg-kenway-navy text-white rounded-xl p-6 text-center">
                         <p className="text-lg">
-                            If they can't answer? <span className="text-context-gold font-semibold">Rewrite it in plainer English.</span>
+                            If they can't answer? <span className="text-kenway-blue font-semibold">Rewrite it in plainer English.</span>
                         </p>
                     </div>
                 </div>
@@ -802,7 +843,7 @@
                         ].map((item) => (
                             <div key={item.num} className="bg-white/10 backdrop-blur-sm rounded-xl p-6">
                                 <div className="flex items-start gap-4">
-                                    <div className="w-12 h-12 bg-context-gold rounded-xl flex items-center justify-center text-kenway-navy font-bold text-xl flex-shrink-0">
+                                    <div className="w-12 h-12 bg-kenway-blue rounded-xl flex items-center justify-center text-white font-bold text-xl flex-shrink-0">
                                         {item.num}
                                     </div>
                                     <div>
@@ -814,7 +855,7 @@
                         ))}
                     </div>
 
-                    <div className="bg-context-gold rounded-2xl p-8 text-kenway-navy text-center">
+                    <div className="bg-kenway-blue rounded-2xl p-8 text-white text-center">
                         <h3 className="text-2xl font-bold mb-4">Your AI is only as good as what it knows.</h3>
                         <p className="text-lg mb-6">
                             Let's look at what your agents need to know — and make sure they know it.
